@@ -19,122 +19,82 @@
     <meta name="twitter:image" content="https://okamotoryolee.github.io/blitast-game/og.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600&family=Shippori+Mincho:wght@600;700;800&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600&family=Shippori+Mincho:wght@600;700;800&display=swap" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="grain" aria-hidden="true"></div>
-    <div class="slash" aria-hidden="true"></div>
-    <div class="poster">
-      <nav class="poster-nav" aria-label="外部リンク">
-        <a id="link-x" href="https://x.com/blitast_studio" target="_blank" rel="noopener noreferrer">@blitast_studio</a>
-        <a id="link-itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
-        <a id="link-github" href="https://github.com/okamotoryolee" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </nav>
-
+    <section class="void">
+      <div class="void-light" aria-hidden="true"></div>
+      <div class="void-ground" aria-hidden="true"></div>
+      <canvas class="field" aria-hidden="true"></canvas>
+      <header class="void-bar">
+        <a class="void-mark" href="./">BLITAST GAME</a>
+        <nav aria-label="外部リンク">
+          <a id="link-x" href="https://x.com/blitast_studio" target="_blank" rel="noopener noreferrer">@blitast_studio</a>
+          <a id="link-itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
+          <a id="link-github" href="https://github.com/okamotoryolee" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </header>
       <h1 class="sr-only" id="sr-tagline">個人が作る、すぐ遊べる小さなゲームたち</h1>
-
-      <a class="wordmark rise" href="./" aria-label="BLITAST GAME">
-        <span class="ghost" aria-hidden="true">
+      <p class="tategaki" aria-hidden="true">個人が作る、すぐ遊べる小さなゲームたち</p>
+      <p class="scroll-hint" aria-hidden="true"><span>Scroll</span></p>
+    </section>
+    <section class="after">
+      <p class="wordmark" aria-hidden="true">
+        <span class="ghost">
           <span class="line">BLITAST</span>
           <span class="line line-game">GAME</span>
         </span>
         <span class="line">BLITAST</span>
         <span class="line line-game">GAME</span>
-      </a>
-
-      <p class="tagline rise rise-2" aria-hidden="true">
+      </p>
+      <p class="tagline" aria-hidden="true">
         <span class="sm">個人が作る、</span>
         <span class="lg">すぐ遊べる</span>
         <span class="sm">小さなゲームたち</span>
       </p>
-
-      <div class="stage rise rise-3">
-        <article>
-          <a
-            class="featured"
-            id="featured-link"
-            href="https://blitastxyz.itch.io/buttered-cat-flappy-paradox"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div class="frame">
-              <img
-                id="featured-cover"
-                src="games/buttered-cat.jpg"
-                alt="Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫"
-                width="1600"
-                height="1200"
-              />
-              <span class="stamp">Featured</span>
-            </div>
-            <div class="meta">
-              <h2 id="featured-title">Buttered Cat Flappy Paradox</h2>
-              <p class="blurb" id="featured-blurb">
-                背中にバタートーストを乗せた猫。クリックかスペースで飛び、どこまで生き残れるか。
-              </p>
-              <span class="seal">
-                <span class="seal-dot" aria-hidden="true"></span>
-                itch.io で遊ぶ
-              </span>
-            </div>
-          </a>
-          <p class="all-games">
-            <a id="all-games" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">
-              すべてのゲーム
-              <span aria-hidden="true">↗</span>
-            </a>
-          </p>
-        </article>
-      </div>
-
-      <div class="marquee rise rise-4" aria-hidden="true">
-        <div class="marquee-track" id="marquee-track"></div>
-      </div>
-    </div>
+      <article class="stage">
+        <a class="featured" id="featured-link" href="https://blitastxyz.itch.io/buttered-cat-flappy-paradox" target="_blank" rel="noopener noreferrer">
+          <div class="frame">
+            <img id="featured-cover" src="games/buttered-cat.jpg" alt="Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫" width="1600" height="1200" />
+            <span class="stamp">Featured</span>
+          </div>
+          <div class="meta">
+            <h2 id="featured-title">Buttered Cat Flappy Paradox</h2>
+            <p class="blurb" id="featured-blurb">背中にバタートーストを乗せた猫。クリックかスペースで飛び、どこまで生き残れるか。</p>
+            <span class="seal"><span class="seal-dot" aria-hidden="true"></span>itch.io で遊ぶ</span>
+          </div>
+        </a>
+        <p class="all-games">
+          <a id="all-games" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">すべてのゲーム <span aria-hidden="true">↗</span></a>
+        </p>
+      </article>
+    </section>
+    <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee-track"></div></div>
     <script src="featured.js"></script>
+    <script src="field.js"></script>
     <script>
       (function () {
         var data = window.BLITAST;
         if (!data) return;
-        var s = data.studio;
-        var f = data.featured;
-        var setText = function (id, text) {
-          var el = document.getElementById(id);
-          if (el && text) el.textContent = text;
-        };
-        var setHref = function (id, href) {
-          var el = document.getElementById(id);
-          if (el && href) el.setAttribute("href", href);
-        };
+        var s = data.studio, f = data.featured;
+        var setText = function (id, t) { var el = document.getElementById(id); if (el && t) el.textContent = t; };
+        var setHref = function (id, h) { var el = document.getElementById(id); if (el && h) el.setAttribute("href", h); };
         setText("sr-tagline", s.tagline);
-        setText("link-x", s.xHandle);
-        setHref("link-x", s.x);
-        setHref("link-itch", s.itch);
-        setHref("link-github", s.github);
-        setHref("all-games", s.itch);
-        setText("featured-title", f.title);
-        setText("featured-blurb", f.blurb);
-        setHref("featured-link", f.url);
+        setText("link-x", s.xHandle); setHref("link-x", s.x);
+        setHref("link-itch", s.itch); setHref("link-github", s.github); setHref("all-games", s.itch);
+        setText("featured-title", f.title); setText("featured-blurb", f.blurb); setHref("featured-link", f.url);
         var img = document.getElementById("featured-cover");
-        if (img) {
-          img.src = f.cover;
-          img.alt = f.coverAlt || f.title;
-        }
+        if (img) { img.src = f.cover; img.alt = f.coverAlt || f.title; }
+        var tategaki = document.querySelector(".tategaki");
+        if (tategaki && s.tagline) tategaki.textContent = s.tagline;
         var track = document.getElementById("marquee-track");
         if (track) {
           var items = [s.tagline, f.title, "PLAY", s.name, "itch.io"];
-          var loop = items.concat(items);
-          track.innerHTML = loop
-            .map(function (item) {
-              return item === "PLAY"
-                ? "<span data-mark>" + item + "</span>"
-                : "<span>" + item + "</span>";
-            })
-            .join("");
+          track.innerHTML = items.concat(items).map(function (item) {
+            return item === "PLAY" ? "<span data-mark>PLAY</span>" : "<span>" + item + "</span>";
+          }).join("");
         }
       })();
     </script>
