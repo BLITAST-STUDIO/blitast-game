@@ -30,6 +30,7 @@ attribute float aSize;
 uniform mat4 uMVP;
 uniform float uTime;
 uniform float uScale;
+uniform float uDim;
 varying float vHue;
 varying float vAlpha;
 void main() {
@@ -37,10 +38,10 @@ void main() {
   p.y += sin(uTime * 0.65 + aPos.x * 2.1 + aPos.z * 1.4) * 0.01;
   gl_Position = uMVP * vec4(p, 1.0);
   float depth = max(gl_Position.w, 0.35);
-  gl_PointSize = min((aSize * uScale) / depth, 11.0);
+  gl_PointSize = min((aSize * uScale) / depth, 11.0) * mix(1.0, 0.72, uDim);
   vHue = aHue;
   float ground = smoothstep(-0.5, 0.02, p.y);
-  vAlpha = clamp(1.4 - depth * 0.11, 0.16, 1.0) * mix(0.16, 1.0, ground);
+  vAlpha = clamp(1.4 - depth * 0.11, 0.16, 1.0) * mix(0.16, 1.0, ground) * mix(1.0, 0.28, uDim);
 }
 `;
   var FRAG = `
@@ -397,6 +398,7 @@ void main() {
     const uMVP = gl.getUniformLocation(prog, "uMVP");
     const uTime = gl.getUniformLocation(prog, "uTime");
     const uScale = gl.getUniformLocation(prog, "uScale");
+    const uDim = gl.getUniformLocation(prog, "uDim");
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE);
     gl.disable(gl.DEPTH_TEST);
@@ -408,6 +410,8 @@ void main() {
     let pointerY = 0;
     let targetX = 0;
     let targetY = 0;
+    let dim = 0;
+    let targetDim = 0;
     let running = true;
     const resize = () => {
       const parent = canvas.parentElement ?? canvas;
@@ -425,11 +429,16 @@ void main() {
       targetX = (e.clientX - rect.left) / rect.width * 2 - 1;
       targetY = (e.clientY - rect.top) / rect.height * 2 - 1;
     };
+    const onScroll = () => {
+      const vh = window.innerHeight || 1;
+      targetDim = Math.min(1, Math.max(0, window.scrollY / (vh * 0.82)));
+    };
     const draw = (now) => {
       if (!running) return;
       const t = (now - start) / 1e3;
       pointerX += (targetX - pointerX) * 0.035;
       pointerY += (targetY - pointerY) * 0.035;
+      dim += (targetDim - dim) * 0.06;
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       const aspect = w / Math.max(h, 1);
@@ -437,7 +446,7 @@ void main() {
       const auto = reduce ? 0.38 : t * 0.16 + 0.38;
       const yaw = auto + pointerX * 0.45;
       const pitch = 0.28 - pointerY * 0.16;
-      const dist = 4.05;
+      const dist = 4.05 + dim * 1.55;
       const cp = Math.cos(pitch);
       const eye = [
         Math.sin(yaw) * cp * dist,
@@ -449,6 +458,7 @@ void main() {
       gl.uniformMatrix4fv(uMVP, false, mvp);
       gl.uniform1f(uTime, reduce ? 0 : t);
       gl.uniform1f(uScale, Math.min(w, h) * (isMobile ? 9e-3 : 78e-4));
+      gl.uniform1f(uDim, dim);
       gl.drawArrays(gl.POINTS, 0, count);
       if (!reduce) raf = requestAnimationFrame(draw);
     };
@@ -459,6 +469,8 @@ void main() {
     ro.observe(canvas.parentElement ?? canvas);
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onMove);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     const onVis = () => {
       if (document.hidden) {
         cancelAnimationFrame(raf);
@@ -474,6 +486,7 @@ void main() {
       ro.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVis);
       const lose = gl.getExtension("WEBGL_lose_context");
       lose?.loseContext();

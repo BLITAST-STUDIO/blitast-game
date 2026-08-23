@@ -24,53 +24,40 @@
   </head>
   <body>
     <div class="grain" aria-hidden="true"></div>
-    <section class="void">
-      <div class="void-light" aria-hidden="true"></div>
-      <div class="void-ground" aria-hidden="true"></div>
+    <div class="studio-field" aria-hidden="true">
+      <div class="void-light"></div>
+      <div class="void-ground"></div>
       <canvas class="field" aria-hidden="true"></canvas>
-      <header class="void-bar">
-        <a class="void-mark" href="./">BLITAST GAME</a>
-        <nav aria-label="外部リンク">
-          <a id="link-x" href="https://x.com/blitast_studio" target="_blank" rel="noopener noreferrer">@blitast_studio</a>
-          <a id="link-itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
-          <a id="link-github" href="https://github.com/okamotoryolee" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </nav>
-      </header>
+    </div>
+    <header class="void-bar">
+      <a class="void-mark" href="./">BLITAST GAME</a>
+      <nav aria-label="外部リンク">
+        <a id="link-x" href="https://x.com/blitast_studio" target="_blank" rel="noopener noreferrer">@blitast_studio</a>
+        <a id="link-itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io</a>
+        <a id="link-github" href="https://github.com/okamotoryolee" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </header>
+    <section class="void">
       <h1 class="sr-only" id="sr-tagline">個人が作る、すぐ遊べる小さなゲームたち</h1>
       <p class="tategaki" aria-hidden="true">個人が作る、すぐ遊べる小さなゲームたち</p>
       <p class="void-caption" aria-hidden="true">落ちない。</p>
       <p class="scroll-hint" aria-hidden="true"><span>Scroll</span></p>
     </section>
-    <section class="after">
-      <p class="wordmark" aria-hidden="true">
-        <span class="ghost">
-          <span class="line">BLITAST</span>
-          <span class="line line-game">GAME</span>
-        </span>
-        <span class="line">BLITAST</span>
-        <span class="line line-game">GAME</span>
+    <section class="exhibit">
+      <p class="kicker">Featured</p>
+      <a class="featured" id="featured-link" href="https://blitastxyz.itch.io/buttered-cat-flappy-paradox" target="_blank" rel="noopener noreferrer">
+        <div class="frame">
+          <img id="featured-cover" src="games/buttered-cat.jpg" alt="Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫" width="1600" height="1200" />
+        </div>
+        <div class="meta">
+          <h2 id="featured-title">Buttered Cat Flappy Paradox</h2>
+          <p class="blurb" id="featured-blurb">背中にバタートーストを乗せた猫。クリックかスペースで飛び、どこまで生き残れるか。</p>
+          <span class="seal"><span class="seal-dot" aria-hidden="true"></span>itch.io で遊ぶ</span>
+        </div>
+      </a>
+      <p class="all-games">
+        <a id="all-games" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">すべてのゲーム <span aria-hidden="true">↗</span></a>
       </p>
-      <p class="tagline" aria-hidden="true">
-        <span class="sm">個人が作る、</span>
-        <span class="lg">すぐ遊べる</span>
-        <span class="sm">小さなゲームたち</span>
-      </p>
-      <article class="stage">
-        <a class="featured" id="featured-link" href="https://blitastxyz.itch.io/buttered-cat-flappy-paradox" target="_blank" rel="noopener noreferrer">
-          <div class="frame">
-            <img id="featured-cover" src="games/buttered-cat.jpg" alt="Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫" width="1600" height="1200" />
-            <span class="stamp">Featured</span>
-          </div>
-          <div class="meta">
-            <h2 id="featured-title">Buttered Cat Flappy Paradox</h2>
-            <p class="blurb" id="featured-blurb">背中にバタートーストを乗せた猫。クリックかスペースで飛び、どこまで生き残れるか。</p>
-            <span class="seal"><span class="seal-dot" aria-hidden="true"></span>itch.io で遊ぶ</span>
-          </div>
-        </a>
-        <p class="all-games">
-          <a id="all-games" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">すべてのゲーム <span aria-hidden="true">↗</span></a>
-        </p>
-      </article>
     </section>
     <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee-track"></div></div>
     <script src="featured.js"></script>
