@@ -33,18 +33,16 @@ uniform float uScale;
 varying float vHue;
 varying float vAlpha;
 void main() {
-  float c = cos(uTime * 0.22);
-  float s = sin(uTime * 0.22);
+  float yaw = sin(uTime * 0.32) * 0.18;
+  float c = cos(yaw);
+  float s = sin(yaw);
   vec3 p = aPos;
   p.xz = mat2(c, -s, s, c) * p.xz;
-  float lift = sin(uTime * 0.7 + aPos.y * 2.4) * 0.03;
-  p.y += lift;
   gl_Position = uMVP * vec4(p, 1.0);
   float depth = max(gl_Position.w, 0.35);
-  gl_PointSize = min((aSize * uScale) / depth, 14.0);
+  gl_PointSize = min((aSize * uScale) / depth, 12.0);
   vHue = aHue;
-  float fade = smoothstep(0.95, 0.35, p.y);
-  vAlpha = clamp(1.5 - depth * 0.14, 0.22, 1.0) * fade;
+  vAlpha = clamp(1.45 - depth * 0.12, 0.2, 1.0);
 }
 `;
   var FRAG = `
@@ -186,60 +184,85 @@ void main() {
     m[10] = c;
     return m;
   }
-  function seedParticles(count) {
+  function seedFallbackB(count) {
     const pos = new Float32Array(count * 3);
     const hue = new Float32Array(count);
     const size = new Float32Array(count);
-    const golden = Math.PI * (3 - Math.sqrt(5));
-    const set = (i2, x, y, z, h, s) => {
-      pos[i2 * 3] = x;
-      pos[i2 * 3 + 1] = y;
-      pos[i2 * 3 + 2] = z;
-      hue[i2] = h;
-      size[i2] = s;
-    };
-    let i = 0;
-    const nRing = Math.floor(count * 0.52);
-    const nCore = Math.floor(count * 0.34);
-    const nToast = count - nRing - nCore;
-    for (let k = 0; k < nRing; k++, i++) {
-      const u = k * golden;
-      const v = k * 1.618 * golden;
-      const R = 0.92;
-      const r = 0.11;
-      set(
-        i,
-        (R + r * Math.cos(v)) * Math.cos(u),
-        r * Math.sin(v) * 0.55,
-        (R + r * Math.cos(v)) * Math.sin(u),
-        k % 23 === 0 ? 0.8 : 0.03,
-        7.2
-      );
-    }
-    for (let k = 0; k < nCore; k++, i++) {
-      const t = k / Math.max(nCore - 1, 1);
-      const y = 1 - t * 2;
-      const rad = Math.sqrt(Math.max(0, 1 - y * y));
-      const a = k * golden;
-      const s = 0.36;
-      set(
-        i,
-        Math.cos(a) * rad * s * 0.92,
-        y * s * 0.78 + 0.08,
-        Math.sin(a) * rad * s * 0.92,
-        t < 0.12 ? 0.28 : 0.05,
-        8.2
-      );
-    }
-    for (let k = 0; k < nToast; k++, i++) {
-      const cols = 22;
-      const gx = k % cols / (cols - 1) - 0.5;
-      const gz = Math.floor(k / cols) / Math.max(Math.floor(nToast / cols) - 1, 1) - 0.5;
-      if (gx * gx * 1.1 + gz * gz * 1.8 > 0.22) {
-        set(i, 0, 0.08, 0, 0.05, 4);
-        continue;
+    for (let i = 0; i < count; i++) {
+      const t = Math.random();
+      let x = 0;
+      let y = 0;
+      if (t < 0.28) {
+        x = -0.42 + (Math.random() - 0.5) * 0.14;
+        y = (Math.random() - 0.5) * 1.15;
+      } else if (t < 0.64) {
+        const a = (Math.random() * 0.9 + 0.55) * Math.PI;
+        x = -0.08 + Math.cos(a) * 0.38;
+        y = 0.28 + Math.sin(a) * 0.3;
+      } else {
+        const a = (Math.random() * 0.9 + 0.55) * Math.PI;
+        x = -0.08 + Math.cos(a) * 0.42;
+        y = -0.28 + Math.sin(a) * 0.34;
       }
-      set(i, gx * 0.5, 0.38 + Math.sin(gx * 7) * 0.01, gz * 0.32, 0.9, 6.4);
+      const ghost = i % 9 === 0;
+      pos[i * 3] = x + (ghost ? 0.04 : 0);
+      pos[i * 3 + 1] = y - (ghost ? 0.02 : 0);
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 0.12;
+      hue[i] = ghost ? 0.9 : 0.04;
+      size[i] = 6.5;
+    }
+    return { pos, hue, size };
+  }
+  function sampleLogo(count) {
+    const W = 1800;
+    const H = 480;
+    const cvs = document.createElement("canvas");
+    cvs.width = W;
+    cvs.height = H;
+    const ctx = cvs.getContext("2d", { willReadFrequently: true });
+    if (!ctx) return seedFallbackB(count);
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = '800 220px "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif';
+    ctx.letterSpacing = "-0.05em";
+    ctx.fillText("BLITAST", W / 2, H / 2 + 10);
+    const { data } = ctx.getImageData(0, 0, W, H);
+    let minX = W;
+    let minY = H;
+    let maxX = 0;
+    let maxY = 0;
+    const ink = [];
+    for (let y = 0; y < H; y += 1) {
+      for (let x = 0; x < W; x += 1) {
+        const a = data[(y * W + x) * 4 + 3];
+        if (a > 48) {
+          ink.push(x, y, a);
+          if (x < minX) minX = x;
+          if (y < minY) minY = y;
+          if (x > maxX) maxX = x;
+          if (y > maxY) maxY = y;
+        }
+      }
+    }
+    const nInk = ink.length / 3;
+    if (nInk < 400) return seedFallbackB(count);
+    const cx = (minX + maxX) / 2;
+    const cy = (minY + maxY) / 2;
+    const bw = Math.max(1, maxX - minX);
+    const scale = 2.35 / bw;
+    const pos = new Float32Array(count * 3);
+    const hue = new Float32Array(count);
+    const size = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      const k = Math.floor(Math.random() * nInk) * 3;
+      const ghost = i % 8 === 0;
+      pos[i * 3] = (ink[k] - cx) * scale + (ghost ? 0.03 : 0);
+      pos[i * 3 + 1] = -(ink[k + 1] - cy) * scale - (ghost ? 0.018 : 0);
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 0.11;
+      hue[i] = ghost ? 0.92 : 0.035;
+      size[i] = 5.2 + ink[k + 2] / 255 * 2.2;
     }
     return { pos, hue, size };
   }
@@ -256,8 +279,7 @@ void main() {
     };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const count = isMobile ? 7e3 : 14e3;
-    const { pos, hue, size } = seedParticles(count);
+    let count = isMobile ? 9e3 : 16e3;
     const prog = gl.createProgram();
     if (!prog) return () => {
     };
@@ -265,17 +287,28 @@ void main() {
     gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
     gl.useProgram(prog);
-    const bindAttr = (name, data, n) => {
-      const buf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-      const loc = gl.getAttribLocation(prog, name);
-      gl.enableVertexAttribArray(loc);
-      gl.vertexAttribPointer(loc, n, gl.FLOAT, false, 0, 0);
+    const posBuf = gl.createBuffer();
+    const hueBuf = gl.createBuffer();
+    const sizeBuf = gl.createBuffer();
+    const locPos = gl.getAttribLocation(prog, "aPos");
+    const locHue = gl.getAttribLocation(prog, "aHue");
+    const locSize = gl.getAttribLocation(prog, "aSize");
+    const upload = (data) => {
+      count = data.pos.length / 3;
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+      gl.bufferData(gl.ARRAY_BUFFER, data.pos, gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(locPos);
+      gl.vertexAttribPointer(locPos, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, hueBuf);
+      gl.bufferData(gl.ARRAY_BUFFER, data.hue, gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(locHue);
+      gl.vertexAttribPointer(locHue, 1, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuf);
+      gl.bufferData(gl.ARRAY_BUFFER, data.size, gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(locSize);
+      gl.vertexAttribPointer(locSize, 1, gl.FLOAT, false, 0, 0);
     };
-    bindAttr("aPos", pos, 3);
-    bindAttr("aHue", hue, 1);
-    bindAttr("aSize", size, 1);
+    upload(sampleLogo(count));
     const uMVP = gl.getUniformLocation(prog, "uMVP");
     const uTime = gl.getUniformLocation(prog, "uTime");
     const uScale = gl.getUniformLocation(prog, "uScale");
@@ -315,20 +348,30 @@ void main() {
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       const aspect = w / Math.max(h, 1);
-      const proj = perspective(32 * Math.PI / 180, aspect, 0.1, 40);
-      const eye = [0, 0.12, 3.7];
-      const view = lookAt(eye, [0, 0.08, 0], [0, 1, 0]);
-      const rot = mat4Mul(rotateY(pointerX * 0.45), rotateX(-pointerY * 0.28));
+      const proj = perspective(28 * Math.PI / 180, aspect, 0.1, 40);
+      const eye = [0, 0.02, 4.5];
+      const view = lookAt(eye, [0, 0, 0], [0, 1, 0]);
+      const rot = mat4Mul(rotateY(pointerX * 0.22), rotateX(-pointerY * 0.12));
       const mvp = mat4Mul(proj, mat4Mul(view, rot));
       gl.uniformMatrix4fv(uMVP, false, mvp);
       gl.uniform1f(uTime, reduce ? 0 : t);
-      gl.uniform1f(uScale, Math.min(w, h) * 0.011);
+      gl.uniform1f(uScale, Math.min(w, h) * (isMobile ? 9e-3 : 8e-3));
       gl.drawArrays(gl.POINTS, 0, count);
       if (!reduce) raf = requestAnimationFrame(draw);
     };
     resize();
     requestAnimationFrame(resize);
     draw(performance.now());
+    const fonts = document.fonts;
+    const onFonts = () => {
+      if (!running) return;
+      void fonts.load('800 220px "Shippori Mincho"').then(() => {
+        if (!running) return;
+        upload(sampleLogo(count));
+      });
+    };
+    if (fonts.status === "loaded") onFonts();
+    else void fonts.ready.then(onFonts);
     const ro = new ResizeObserver(resize);
     ro.observe(canvas.parentElement ?? canvas);
     window.addEventListener("resize", resize);
