@@ -37,13 +37,14 @@ void main() {
   float s = sin(uTime * 0.22);
   vec3 p = aPos;
   p.xz = mat2(c, -s, s, c) * p.xz;
-  float lift = sin(uTime * 0.7 + aPos.y * 2.4) * 0.04;
+  float lift = sin(uTime * 0.7 + aPos.y * 2.4) * 0.03;
   p.y += lift;
   gl_Position = uMVP * vec4(p, 1.0);
   float depth = max(gl_Position.w, 0.35);
-  gl_PointSize = min((aSize * uScale) / depth, 16.0);
+  gl_PointSize = min((aSize * uScale) / depth, 14.0);
   vHue = aHue;
-  vAlpha = clamp(1.5 - depth * 0.14, 0.22, 1.0);
+  float fade = smoothstep(0.95, 0.35, p.y);
+  vAlpha = clamp(1.5 - depth * 0.14, 0.22, 1.0) * fade;
 }
 `;
   var FRAG = `
@@ -198,54 +199,47 @@ void main() {
       size[i2] = s;
     };
     let i = 0;
-    const nRing = Math.floor(count * 0.46);
-    const nCore = Math.floor(count * 0.28);
-    const nToast = Math.floor(count * 0.14);
-    const nSteam = count - nRing - nCore - nToast;
+    const nRing = Math.floor(count * 0.52);
+    const nCore = Math.floor(count * 0.34);
+    const nToast = count - nRing - nCore;
     for (let k = 0; k < nRing; k++, i++) {
       const u = k * golden;
       const v = k * 1.618 * golden;
-      const R = 1.02;
-      const r = 0.145;
+      const R = 0.92;
+      const r = 0.11;
       set(
         i,
         (R + r * Math.cos(v)) * Math.cos(u),
-        r * Math.sin(v) * 0.62 + 0.12,
+        r * Math.sin(v) * 0.55,
         (R + r * Math.cos(v)) * Math.sin(u),
-        k % 17 === 0 ? 0.92 : 0.03,
-        7.5
+        k % 23 === 0 ? 0.8 : 0.03,
+        7.2
       );
     }
     for (let k = 0; k < nCore; k++, i++) {
-      const t = k / nCore;
+      const t = k / Math.max(nCore - 1, 1);
+      const y = 1 - t * 2;
+      const rad = Math.sqrt(Math.max(0, 1 - y * y));
       const a = k * golden;
-      const rad = Math.sqrt(t) * 0.38;
-      const y = Math.cos(a * 0.15) * 0.12;
+      const s = 0.36;
       set(
         i,
-        Math.cos(a) * rad * 0.85,
-        0.28 + y + (1 - t) * 0.18,
-        Math.sin(a) * rad * 0.7,
-        t > 0.82 ? 0.35 : 0.06,
-        8.5
+        Math.cos(a) * rad * s * 0.92,
+        y * s * 0.78 + 0.08,
+        Math.sin(a) * rad * s * 0.92,
+        t < 0.12 ? 0.28 : 0.05,
+        8.2
       );
     }
     for (let k = 0; k < nToast; k++, i++) {
-      const gx = k % 18 / 17 - 0.5;
-      const gz = Math.floor(k / 18) / Math.max(Math.floor(nToast / 18), 1) - 0.5;
-      set(i, gx * 0.62 + 0.08, 0.62 + Math.sin(gx * 8) * 0.012, gz * 0.38, 0.88, 6.8);
-    }
-    for (let k = 0; k < nSteam; k++, i++) {
-      const a = k * golden;
-      const rad = k / nSteam * 0.16;
-      set(
-        i,
-        Math.cos(a) * rad,
-        0.85 + k / nSteam * 1.15,
-        Math.sin(a) * rad,
-        k % 5 === 0 ? 0.55 : 0.02,
-        5.2
-      );
+      const cols = 22;
+      const gx = k % cols / (cols - 1) - 0.5;
+      const gz = Math.floor(k / cols) / Math.max(Math.floor(nToast / cols) - 1, 1) - 0.5;
+      if (gx * gx * 1.1 + gz * gz * 1.8 > 0.22) {
+        set(i, 0, 0.08, 0, 0.05, 4);
+        continue;
+      }
+      set(i, gx * 0.5, 0.38 + Math.sin(gx * 7) * 0.01, gz * 0.32, 0.9, 6.4);
     }
     return { pos, hue, size };
   }
@@ -322,8 +316,8 @@ void main() {
       gl.clear(gl.COLOR_BUFFER_BIT);
       const aspect = w / Math.max(h, 1);
       const proj = perspective(32 * Math.PI / 180, aspect, 0.1, 40);
-      const eye = [0, 0.55, 4.6];
-      const view = lookAt(eye, [0, 0.35, 0], [0, 1, 0]);
+      const eye = [0, 0.12, 3.7];
+      const view = lookAt(eye, [0, 0.08, 0], [0, 1, 0]);
       const rot = mat4Mul(rotateY(pointerX * 0.45), rotateX(-pointerY * 0.28));
       const mvp = mat4Mul(proj, mat4Mul(view, rot));
       gl.uniformMatrix4fv(uMVP, false, mvp);
