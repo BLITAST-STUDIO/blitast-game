@@ -4,7 +4,15 @@
 
 ゲームの実体と一覧は [itch.io](https://blitastxyz.itch.io/) にあります。このリポジトリは薄い看板です。
 
-**公開 URL:** https://okamotoryolee.github.io/blitast-game/
+**公開 URL（Pages を一度有効にすると使えます）:** https://okamotoryolee.github.io/blitast-game/
+
+## 最初に一度だけ: GitHub Pages をオン
+
+1. このリポジトリの [Settings → Pages](https://github.com/okamotoryolee/blitast-game/settings/pages)
+2. Build and deployment → Source を **Deploy from a branch**
+3. Branch を `main`、フォルダを `/ (root)` にして Save
+
+数十秒後に上の URL で開きます。友人に渡すのはその URL です。
 
 ## Featured の差し替え
 
@@ -23,7 +31,7 @@ featured: {
 }
 ```
 
-3. コミットして `main` に push する
+3. `main` に push する（Pages が自動で更新されます）
 
 ## リンク
 
