@@ -14,6 +14,15 @@ window.BLITAST = {
     xHandle: "@blitast_studio",
     github: "https://github.com/okamotoryolee",
   },
+  also: [
+    {
+      title: "のっぺらCATCH",
+      url: "https://blitastxyz.itch.io/noppera-catch",
+      blurb: "のっぺらぼうの顔面で、落ちてくる眉・目・鼻・口をキャッチする。完成した顔はだいたい変です。",
+      cover: "games/noppera-catch.jpg",
+      coverAlt: "のっぺらCATCH — のっぺらぼうの顔にパーツが落ちてくる"
+    }
+  ],
   featured: {
     title: "Buttered Cat Flappy Paradox",
     url: "https://blitastxyz.itch.io/buttered-cat-flappy-paradox",
