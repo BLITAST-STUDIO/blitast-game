@@ -55,6 +55,10 @@
           <span class="seal"><span class="seal-dot" aria-hidden="true"></span>itch.io で遊ぶ</span>
         </div>
       </a>
+      <div class="also" id="also-wrap" hidden>
+        <p class="kicker kicker-also">Also</p>
+        <ul id="also-list"></ul>
+      </div>
       <p class="all-games">
         <a id="all-games" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">すべてのゲーム <span aria-hidden="true">↗</span></a>
       </p>
@@ -77,9 +81,27 @@
         if (img) { img.src = f.cover; img.alt = f.coverAlt || f.title; }
         var tategaki = document.querySelector(".tategaki");
         if (tategaki && s.tagline) tategaki.textContent = s.tagline;
+        var alsoWrap = document.getElementById("also-wrap");
+        var alsoList = document.getElementById("also-list");
+        var also = data.also || [];
+        if (alsoWrap && alsoList && also.length) {
+          alsoWrap.hidden = false;
+          alsoList.innerHTML = also.map(function (g) {
+            var title = g.title || "";
+            var url = g.url || "#";
+            var blurb = g.blurb || "";
+            var cover = g.cover || "";
+            var alt = g.coverAlt || title;
+            return '<li><a class="also-card" href="'+url+'" target="_blank" rel="noopener noreferrer">'
+              + '<div class="frame"><img src="'+cover+'" alt="'+alt+'" width="1600" height="1200" /></div>'
+              + '<div class="also-meta"><h3>'+title+'</h3><p>'+blurb+'</p></div>'
+              + '</a></li>';
+          }).join("");
+        }
         var track = document.getElementById("marquee-track");
         if (track) {
-          var items = [s.tagline, f.title, "PLAY", s.name, "itch.io"];
+          var alsoTitles = also.map(function (g) { return g.title; });
+          var items = [s.tagline, f.title].concat(alsoTitles).concat(["PLAY", s.name, "itch.io"]);
           track.innerHTML = items.concat(items).map(function (item) {
             return item === "PLAY" ? "<span data-mark>PLAY</span>" : "<span>" + item + "</span>";
           }).join("");

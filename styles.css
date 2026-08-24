@@ -327,6 +327,57 @@ img{max-width:100%;display:block}
   box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 22%, transparent);
 }
 
+.also {
+  margin-top: 2.75rem;
+  max-width: 28rem;
+}
+
+.kicker-also {
+  color: var(--muted);
+}
+
+.also ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.also-card {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 1rem;
+  align-items: center;
+  color: inherit;
+  outline: none;
+}
+
+.also-card .frame {
+  margin: 0;
+}
+
+.also-card:focus-visible .frame {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.also-meta h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.also-meta p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
 .all-games {
   margin: 1.75rem 0 0;
 }
@@ -430,6 +481,10 @@ img{max-width:100%;display:block}
   }
 
   .featured {
+    max-width: 32rem;
+  }
+
+  .also {
     max-width: 32rem;
   }
 }
