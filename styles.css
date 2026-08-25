@@ -78,8 +78,8 @@ img{max-width:100%;display:block}
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse 58% 44% at 54% 36%, #2a1c14 0%, transparent 58%),
-    radial-gradient(ellipse 90% 70% at 50% 100%, #0c0a09 0%, #050506 68%);
+    radial-gradient(ellipse 62% 48% at 52% 38%, #14182a 0%, transparent 58%),
+    radial-gradient(ellipse 90% 70% at 50% 100%, #070814 0%, #05060c 70%);
 }
 
 .void {
@@ -96,8 +96,8 @@ img{max-width:100%;display:block}
   position: absolute;
   inset: 8% 8% 18%;
   background:
-    radial-gradient(ellipse at 62% 28%, rgb(255 214 170 / 0.14) 0%, transparent 52%),
-    radial-gradient(ellipse at 28% 54%, rgb(226 59 42 / 0.06) 0%, transparent 42%);
+    radial-gradient(ellipse at 60% 24%, rgb(210 220 255 / 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 30% 60%, rgb(176 138 74 / 0.06) 0%, transparent 42%);
   z-index: 0;
 }
 
@@ -173,6 +173,37 @@ img{max-width:100%;display:block}
 
 .tategaki {
   display: none;
+}
+
+.hero-mark {
+  position: absolute;
+  z-index: 3;
+  left: 1.25rem;
+  bottom: 5.2rem;
+  margin: 0;
+  pointer-events: none;
+}
+
+.hero-kicker {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #d4b57a 80%, white);
+}
+
+.hero-name {
+  display: block;
+  color: #f4f1ea;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 12vw, 7.2rem);
+  font-weight: 800;
+  font-feature-settings: "palt";
+  letter-spacing: -0.045em;
+  line-height: 0.82;
 }
 
 .scroll-hint {
@@ -445,6 +476,11 @@ img{max-width:100%;display:block}
 @media (min-width: 768px) {
   .void-bar {
     padding: 0.5rem 2rem 0;
+  }
+
+  .hero-mark {
+    left: 2rem;
+    bottom: 6.2rem;
   }
 
   .tategaki {
