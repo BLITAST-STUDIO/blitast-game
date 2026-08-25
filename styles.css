@@ -78,8 +78,8 @@ img{max-width:100%;display:block}
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse 62% 48% at 52% 38%, #14182a 0%, transparent 58%),
-    radial-gradient(ellipse 90% 70% at 50% 100%, #070814 0%, #05060c 70%);
+    radial-gradient(ellipse 50% 40% at 54% 34%, #101218 0%, transparent 62%),
+    radial-gradient(ellipse 90% 70% at 50% 100%, #050506 0%, #030304 72%);
 }
 
 .void {
@@ -96,8 +96,8 @@ img{max-width:100%;display:block}
   position: absolute;
   inset: 8% 8% 18%;
   background:
-    radial-gradient(ellipse at 60% 24%, rgb(210 220 255 / 0.1) 0%, transparent 55%),
-    radial-gradient(ellipse at 30% 60%, rgb(176 138 74 / 0.06) 0%, transparent 42%);
+    radial-gradient(ellipse at 62% 20%, rgb(160 176 210 / 0.07) 0%, transparent 52%),
+    radial-gradient(ellipse at 48% 48%, rgb(90 28 22 / 0.05) 0%, transparent 40%);
   z-index: 0;
 }
 
@@ -192,12 +192,12 @@ img{max-width:100%;display:block}
   font-weight: 600;
   letter-spacing: 0.38em;
   text-transform: uppercase;
-  color: color-mix(in oklab, #d4b57a 80%, white);
+  color: color-mix(in oklab, #8a8f9a 70%, white);
 }
 
 .hero-name {
   display: block;
-  color: #f4f1ea;
+  color: #e6e2db;
   font-family: var(--font-display);
   font-size: clamp(2.8rem, 12vw, 7.2rem);
   font-weight: 800;
