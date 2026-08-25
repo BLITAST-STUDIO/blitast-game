@@ -35,13 +35,14 @@ varying float vHue;
 varying float vAlpha;
 void main() {
   vec3 p = aPos;
-  p.y += sin(uTime * 0.65 + aPos.x * 2.1 + aPos.z * 1.4) * 0.01;
+  float pulse = sin(uTime * 0.55 + length(aPos) * 2.4) * 0.014;
+  p += normalize(p + vec3(0.0001)) * pulse;
   gl_Position = uMVP * vec4(p, 1.0);
   float depth = max(gl_Position.w, 0.35);
-  gl_PointSize = min((aSize * uScale) / depth, 11.0) * mix(1.0, 0.72, uDim);
+  gl_PointSize = min((aSize * uScale) / depth, 10.5) * mix(1.0, 0.72, uDim);
   vHue = aHue;
-  float ground = smoothstep(-0.5, 0.02, p.y);
-  vAlpha = clamp(1.4 - depth * 0.11, 0.16, 1.0) * mix(0.16, 1.0, ground) * mix(1.0, 0.28, uDim);
+  float ground = smoothstep(-0.55, 0.0, p.y);
+  vAlpha = clamp(1.42 - depth * 0.11, 0.16, 1.0) * mix(0.14, 1.0, ground) * mix(1.0, 0.28, uDim);
 }
 `;
   var FRAG = `
@@ -53,9 +54,9 @@ void main() {
   float r = dot(uv, uv);
   if (r > 1.0) discard;
   float glow = exp(-r * 3.4);
-  vec3 bone = vec3(0.96, 0.93, 0.88);
-  vec3 gold = vec3(0.93, 0.70, 0.34);
-  vec3 verm = vec3(0.90, 0.22, 0.14);
+  vec3 bone = vec3(0.93, 0.94, 0.96);
+  vec3 gold = vec3(0.82, 0.68, 0.38);
+  vec3 verm = vec3(0.86, 0.24, 0.16);
   vec3 col = vHue < 0.42
     ? mix(bone, gold, vHue / 0.42)
     : mix(gold, verm, (vHue - 0.42) / 0.58);
@@ -196,158 +197,80 @@ void main() {
       push(c, cx + p[0] * rx * k, cy + p[1] * ry * k, cz + p[2] * rz * k, hue, size);
     }
   }
-  function drawCat(ctx, W, H) {
-    ctx.clearRect(0, 0, W, H);
-    const s = Math.min(W, H);
-    ctx.save();
-    ctx.translate(W * 0.5, H * 0.56);
-    ctx.scale(s / 520, s / 520);
-    ctx.fillStyle = "#ffffff";
-    ctx.beginPath();
-    ctx.ellipse(-40, 28, 118, 92, -0.18, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(-95, 38, 78, 78, 0.2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(78, -62, 70, 66, 0.12, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(118, -40, 32, 26, 0.3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(52, 70, 38, 62, 0.15, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(22, 92, 28, 42, 0.05, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(-20, 96, 30, 40, -0.08, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(38, -100);
-    ctx.lineTo(18, -168);
-    ctx.lineTo(72, -108);
-    ctx.closePath();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(88, -112);
-    ctx.lineTo(108, -176);
-    ctx.lineTo(128, -100);
-    ctx.closePath();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(-150, 40);
-    ctx.bezierCurveTo(-230, 20, -250, -90, -160, -130);
-    ctx.bezierCurveTo(-110, -152, -88, -90, -118, -30);
-    ctx.bezierCurveTo(-138, 18, -120, 50, -80, 58);
-    ctx.closePath();
-    ctx.fill();
-    ctx.fillStyle = "#ff2200";
-    ctx.beginPath();
-    ctx.moveTo(40, -108);
-    ctx.lineTo(32, -146);
-    ctx.lineTo(60, -112);
-    ctx.closePath();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(96, -118);
-    ctx.lineTo(108, -154);
-    ctx.lineTo(118, -108);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
+  function cross(a, b) {
+    return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
   }
-  function sampleCat(c, n) {
-    const W = 900;
-    const H = 780;
-    const cvs = document.createElement("canvas");
-    cvs.width = W;
-    cvs.height = H;
-    const ctx = cvs.getContext("2d", { willReadFrequently: true });
-    if (!ctx) return;
-    drawCat(ctx, W, H);
-    const { data } = ctx.getImageData(0, 0, W, H);
-    const ink = [];
-    let minX = W, minY = H, maxX = 0, maxY = 0;
-    for (let y = 0; y < H; y += 1) {
-      for (let x = 0; x < W; x += 1) {
-        const i = (y * W + x) * 4;
-        if (data[i + 3] < 40) continue;
-        ink.push(x, y, data[i + 1]);
-        if (x < minX) minX = x;
-        if (y < minY) minY = y;
-        if (x > maxX) maxX = x;
-        if (y > maxY) maxY = y;
-      }
-    }
-    const nInk = ink.length / 3;
-    if (nInk < 400) return;
-    const cx = (minX + maxX) / 2;
-    const cy = (minY + maxY) / 2;
-    const bh = Math.max(1, maxY - minY);
-    const scale = 1.12 / bh;
-    const isInk = (x, y) => {
-      if (x < 0 || y < 0 || x >= W || y >= H) return false;
-      return data[(y * W + x) * 4 + 3] > 40;
-    };
+  function norm(v) {
+    const l = Math.hypot(v[0], v[1], v[2]) || 1;
+    return [v[0] / l, v[1] / l, v[2] / l];
+  }
+  function knotPoint(t, p, q, R, r) {
+    const pt = p * t;
+    const qt = q * t;
+    const cr = R + r * Math.cos(qt);
+    return [cr * Math.cos(pt), r * Math.sin(qt) * 1.08, cr * Math.sin(pt)];
+  }
+  function knotTangent(t, p, q, R, r) {
+    const e = 4e-3;
+    const a = knotPoint(t - e, p, q, R, r);
+    const b = knotPoint(t + e, p, q, R, r);
+    return norm([b[0] - a[0], b[1] - a[1], b[2] - a[2]]);
+  }
+  function fillKnot(c, n, p, q, R, r, tube, hue, size) {
     for (let i = 0; i < n; i++) {
-      const k = Math.floor(Math.random() * nInk) * 3;
-      const x = ink[k];
-      const y = ink[k + 1];
-      const g = ink[k + 2];
-      const edge = !isInk(x + 4, y) || !isInk(x - 4, y) || !isInk(x, y + 4) || !isInk(x, y - 4);
-      const thick = edge ? 0.045 : 0.16;
-      const wx = (x - cx) * scale;
-      const wy = -(y - cy) * scale + 0.22;
-      const wz = (Math.random() - 0.5) * thick * 2;
-      const hue = g < 80 ? 0.9 : 0.06;
-      push(c, wx, wy, wz, hue, edge ? 5.6 : 6.5);
+      const t = i / n * Math.PI * 2;
+      const o = knotPoint(t, p, q, R, r);
+      const T = knotTangent(t, p, q, R, r);
+      const N = norm(cross(T, Math.abs(T[1]) < 0.86 ? [0, 1, 0] : [1, 0, 0]));
+      const B = norm(cross(T, N));
+      const a = Math.random() * Math.PI * 2;
+      const rad = tube * (0.55 + Math.random() * 0.45);
+      push(
+        c,
+        o[0] + (N[0] * Math.cos(a) + B[0] * Math.sin(a)) * rad,
+        o[1] + (N[1] * Math.cos(a) + B[1] * Math.sin(a)) * rad,
+        o[2] + (N[2] * Math.cos(a) + B[2] * Math.sin(a)) * rad,
+        hue + (i % 17 === 0 ? 0.55 : 0),
+        size
+      );
     }
   }
-  function seedParadox(count) {
+  function fillRing(c, n, radius, tube, hue, size, rot) {
+    for (let i = 0; i < n; i++) {
+      const a = i / n * Math.PI * 2;
+      const u = Math.random() * Math.PI * 2;
+      const rr = tube * Math.random();
+      const x = (radius + Math.cos(u) * rr) * Math.cos(a);
+      const y = Math.sin(u) * rr;
+      const z = (radius + Math.cos(u) * rr) * Math.sin(a);
+      const p = rot(x, y, z);
+      push(c, p[0], p[1], p[2], hue, size);
+    }
+  }
+  function seedField(count) {
     const c = cloud();
-    const n = (p) => Math.max(8, Math.floor(count * p));
-    sampleCat(c, n(0.68));
-    const nToast = n(0.12);
-    for (let i = 0; i < nToast; i++) {
-      let x = 0;
-      let z = 0;
-      for (let t = 0; t < 12; t++) {
-        x = (Math.random() * 2 - 1) * 0.52;
-        z = (Math.random() * 2 - 1) * 0.36;
-        if (x * x * 1.15 + z * z * 2.1 <= 0.28) break;
-      }
-      const y = Math.random() * 0.045;
-      const butter = y > 0.022;
-      push(c, x + 0.04, y + 0.01, z, butter ? 0.9 : 0.16, butter ? 6.4 : 5.6);
-    }
-    ellipsoid(c, n(0.035), 0.1, 0.07, 0.02, 0.22, 0.03, 0.16, 0.94, 6.6, 0.3);
+    const n = (p) => Math.max(12, Math.floor(count * p));
+    fillKnot(c, n(0.46), 3, 2, 0.62, 0.28, 0.045, 0.05, 6.2);
+    fillRing(c, n(0.12), 1.12, 0.018, 0.34, 5.6, (x, y, z) => [x, y, z]);
+    fillRing(c, n(0.12), 1.02, 0.016, 0.08, 5.4, (x, y, z) => [x, z, -y]);
+    fillRing(c, n(0.1), 0.92, 0.014, 0.9, 5.5, (x, y, z) => {
+      const a = 0.55;
+      return [x, y * Math.cos(a) - z * Math.sin(a), y * Math.sin(a) + z * Math.cos(a)];
+    });
+    ellipsoid(c, n(0.08), 0, 0, 0, 0.16, 0.16, 0.16, 0.12, 6.8, 0.7);
     const golden = Math.PI * (3 - Math.sqrt(5));
-    const nRing = n(0.09);
-    for (let k = 0; k < nRing; k++) {
-      const u = k * golden;
-      const v = k * 1.7 * golden;
-      const R = 1.22;
-      const r = 0.028;
-      const x = (R + r * Math.cos(v)) * Math.cos(u);
-      const y = r * Math.sin(v);
-      const z = (R + r * Math.cos(v)) * Math.sin(u);
-      const tilt = 0.22;
-      const yy = y * Math.cos(tilt) - z * Math.sin(tilt);
-      const zz = y * Math.sin(tilt) + z * Math.cos(tilt);
-      push(c, x, yy + 0.18, zz, k % 11 === 0 ? 0.88 : 0.36, 5.8);
+    const nShell = n(0.08);
+    for (let i = 0; i < nShell; i++) {
+      const y = 1 - i / (nShell - 1) * 2;
+      const r = Math.sqrt(Math.max(0, 1 - y * y));
+      const a = i * golden;
+      push(c, Math.cos(a) * r * 1.55, y * 1.55, Math.sin(a) * r * 1.55, i % 13 === 0 ? 0.78 : 0.1, 4.1);
     }
-    const nDust = n(0.04);
-    for (let i = 0; i < nDust; i++) {
-      const p = unitBall();
-      push(c, p[0] * 1.7, p[1] * 1.1 + 0.25, p[2] * 1.7, Math.random() < 0.15 ? 0.8 : 0.12, 4.2);
-    }
-    const nRef = n(0.035);
+    const nRef = n(0.04);
     const src = c.x.length;
     for (let i = 0; i < nRef; i++) {
       const k = Math.floor(Math.random() * src);
-      push(c, c.x[k], -c.y[k] * 0.28 - 0.04, c.z[k], c.h[k], 4.4);
+      push(c, c.x[k], -c.y[k] * 0.22 - 0.08, c.z[k], c.h[k], 4.2);
     }
     const total = c.x.length;
     const pos = new Float32Array(total * 3);
@@ -357,7 +280,7 @@ void main() {
       pos[i * 3] = c.x[i];
       pos[i * 3 + 1] = c.y[i];
       pos[i * 3 + 2] = c.z[i];
-      hue[i] = c.h[i];
+      hue[i] = Math.min(1, c.h[i]);
       size[i] = c.s[i];
     }
     return { pos, hue, size };
@@ -375,7 +298,7 @@ void main() {
     };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const seeded = seedParadox(isMobile ? 11e3 : 19e3);
+    const seeded = seedField(isMobile ? 11e3 : 19e3);
     const count = seeded.pos.length / 3;
     const prog = gl.createProgram();
     if (!prog) return () => {
@@ -453,7 +376,7 @@ void main() {
         0.42 + Math.sin(pitch) * dist * 0.85,
         Math.cos(yaw) * cp * dist
       ];
-      const view = lookAt(eye, [0.04, 0.26, 0], [0, 1, 0]);
+      const view = lookAt(eye, [0, 0.02, 0], [0, 1, 0]);
       const mvp = mat4Mul(proj, view);
       gl.uniformMatrix4fv(uMVP, false, mvp);
       gl.uniform1f(uTime, reduce ? 0 : t);
