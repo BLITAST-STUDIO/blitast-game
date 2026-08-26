@@ -183,51 +183,87 @@ img{max-width:100%;display:block}
   margin: 0;
 }
 
-.hero-glitch {
+/*
+  .logo — refined glitch lockup
+  --logo-aber           idle RGB split
+  --logo-aber-hot       hover split
+  --logo-aber-hit       regular glitch split
+  --logo-aber-strong    rare strong split
+  --logo-shift          regular x-nudge
+  --logo-shift-strong   rare x-nudge
+  --logo-scan           scanline strength (0–1)
+  --logo-duration       burst length
+*/
+.logo {
+  --logo-color: #e6e2db;
+  --logo-aber-r: #e23b2a;
+  --logo-aber-b: #4d8cff;
+  --logo-aber: 1.5px;
+  --logo-aber-hot: 2.5px;
+  --logo-aber-hit: 5px;
+  --logo-aber-strong: 8px;
+  --logo-shift: 3px;
+  --logo-shift-strong: 6px;
+  --logo-scan: 0.07;
+  --logo-duration: 190ms;
+  --logo-dx: 0px;
+  --logo-clip-r: inset(18% 0 55% 0);
+  --logo-clip-b: inset(52% 0 12% 0);
+
   position: relative;
   display: block;
+  overflow: hidden;
   outline: none;
   cursor: default;
-  color: #e6e2db;
-  --gx: 0px;
-  --gy: 0px;
-  --gs: 4px;
-  --go: 0.5;
-  --cx: 3px;
-  --rx: -3px;
+  color: var(--logo-color);
+  isolation: isolate;
 }
 
-.hero-glitch-layer {
+.logo-core {
+  position: relative;
+  z-index: 1;
   display: block;
-}
-
-.hero-glitch-layer.is-base {
-  transform: translate(var(--gx), var(--gy));
   text-shadow:
-    var(--gs) 0 0 #e23b2a,
-    calc(var(--gs) * -1) 0 0 #4d8cff;
+    var(--logo-aber) 0 0 color-mix(in oklab, var(--logo-aber-r) 55%, transparent),
+    calc(var(--logo-aber) * -1) 0 0
+      color-mix(in oklab, var(--logo-aber-b) 55%, transparent);
+  transition:
+    text-shadow 280ms ease,
+    transform 280ms ease;
 }
 
-.hero-glitch-layer.is-cyan,
-.hero-glitch-layer.is-red {
+.logo-rgb {
   position: absolute;
   inset: 0;
+  z-index: 2;
+  display: block;
   pointer-events: none;
+  opacity: 0;
 }
 
-.hero-glitch-layer.is-cyan {
-  color: #4d8cff;
-  opacity: var(--go);
-  transform: translate(calc(var(--gx) + var(--cx)), calc(var(--gy) - 1px));
+.logo-rgb-r {
+  color: var(--logo-aber-r);
 }
 
-.hero-glitch-layer.is-red {
-  color: #e23b2a;
-  opacity: var(--go);
-  transform: translate(calc(var(--gx) + var(--rx)), calc(var(--gy) + 1px));
+.logo-rgb-b {
+  color: var(--logo-aber-b);
 }
 
-.hero-line {
+.logo-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: var(--logo-scan);
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.11) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+.logo-line {
   display: block;
   font-family: var(--font-display);
   font-size: clamp(2.05rem, 8.6vw, 5.1rem);
@@ -237,10 +273,52 @@ img{max-width:100%;display:block}
   line-height: 0.86;
 }
 
-.hero-line.is-sub {
+.logo-line + .logo-line {
   margin-top: 0.02em;
-  letter-spacing: -0.04em;
-  color: inherit;
+}
+
+.logo:hover .logo-core,
+.logo:focus-visible .logo-core {
+  text-shadow:
+    var(--logo-aber-hot) 0 0
+      color-mix(in oklab, var(--logo-aber-r) 70%, transparent),
+    calc(var(--logo-aber-hot) * -1) 0 0
+      color-mix(in oklab, var(--logo-aber-b) 70%, transparent);
+}
+
+.logo.is-glitch .logo-core {
+  transform: translate(var(--logo-dx), 0);
+  text-shadow:
+    var(--logo-aber-hit) 0 0 var(--logo-aber-r),
+    calc(var(--logo-aber-hit) * -1) 0 0 var(--logo-aber-b);
+  transition-duration: 60ms;
+}
+
+.logo.is-glitch .logo-rgb-r {
+  opacity: 0.72;
+  clip-path: var(--logo-clip-r);
+  transform: translate(var(--logo-dx), -1px);
+}
+
+.logo.is-glitch .logo-rgb-b {
+  opacity: 0.72;
+  clip-path: var(--logo-clip-b);
+  transform: translate(calc(var(--logo-dx) * -1), 1px);
+}
+
+.logo.is-glitch .logo-scan {
+  opacity: 0.16;
+}
+
+.logo.is-glitch-strong .logo-core {
+  text-shadow:
+    var(--logo-aber-strong) 0 0 var(--logo-aber-r),
+    calc(var(--logo-aber-strong) * -1) 0 0 var(--logo-aber-b);
+}
+
+.logo.is-glitch-strong .logo-rgb-r,
+.logo.is-glitch-strong .logo-rgb-b {
+  opacity: 0.88;
 }
 
 .scroll-hint {

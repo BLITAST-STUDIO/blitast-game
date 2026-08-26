@@ -40,19 +40,20 @@
     <section class="void">
       <h1 class="sr-only" id="sr-tagline">個人が作る、すぐ遊べる小さなゲームたち</h1>
       <p class="hero-mark">
-        <span class="hero-glitch" tabindex="0">
-          <span class="hero-glitch-layer is-base">
-            <span class="hero-line">BLITAST</span>
-            <span class="hero-line is-sub">STUDIO</span>
+        <span class="logo" tabindex="0">
+          <span class="logo-core">
+            <span class="logo-line">BLITAST</span>
+            <span class="logo-line">STUDIO</span>
           </span>
-          <span class="hero-glitch-layer is-cyan" aria-hidden="true">
-            <span class="hero-line">BLITAST</span>
-            <span class="hero-line is-sub">STUDIO</span>
+          <span class="logo-rgb logo-rgb-r" aria-hidden="true">
+            <span class="logo-line">BLITAST</span>
+            <span class="logo-line">STUDIO</span>
           </span>
-          <span class="hero-glitch-layer is-red" aria-hidden="true">
-            <span class="hero-line">BLITAST</span>
-            <span class="hero-line is-sub">STUDIO</span>
+          <span class="logo-rgb logo-rgb-b" aria-hidden="true">
+            <span class="logo-line">BLITAST</span>
+            <span class="logo-line">STUDIO</span>
           </span>
+          <span class="logo-scan" aria-hidden="true"></span>
         </span>
       </p>
       <p class="tategaki" aria-hidden="true">個人が作る、すぐ遊べる小さなゲームたち</p>
@@ -197,30 +198,39 @@
 
     <script>
       (function () {
-        var el = document.querySelector(".hero-glitch");
+        var el = document.querySelector(".logo");
         if (!el) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var hover = false;
-        var burstUntil = 0;
-        el.addEventListener("pointerenter", function () { hover = true; });
-        el.addEventListener("pointerleave", function () { hover = false; });
-        function tick(now) {
-          if (now > burstUntil && Math.random() < (hover ? 0.18 : 0.035)) {
-            burstUntil = now + (hover ? 220 : 160);
-          }
-          var hit = now < burstUntil;
-          var amp = hover ? 14 : 9;
-          var gx = hit ? (Math.random() * 2 - 1) * amp : 0;
-          var gy = hit ? (Math.random() * 2 - 1) * (amp * 0.35) : 0;
-          var gs = hit ? 8 + Math.random() * 10 : 4;
-          el.style.setProperty("--gx", gx.toFixed(1) + "px");
-          el.style.setProperty("--gy", gy.toFixed(1) + "px");
-          el.style.setProperty("--gs", gs.toFixed(1) + "px");
-          el.style.setProperty("--go", hit || hover ? "0.85" : "0.5");
-          el.style.setProperty("--cx", hit ? (6 + Math.random() * 10).toFixed(1) + "px" : "3px");
-          el.style.setProperty("--rx", hit ? (-6 - Math.random() * 10).toFixed(1) + "px" : "-3px");
-          requestAnimationFrame(tick);
+        var timer = 0;
+        var clearTimer = 0;
+        function slice() {
+          var a = 4 + Math.random() * 40;
+          var b = 8 + Math.random() * 40;
+          return "inset(" + a.toFixed(0) + "% 0 " + b.toFixed(0) + "% 0)";
         }
-        requestAnimationFrame(tick);
+        function fire(strong) {
+          el.style.setProperty("--logo-clip-r", slice());
+          el.style.setProperty("--logo-clip-b", slice());
+          var amp = strong ? "var(--logo-shift-strong)" : (hover ? "calc(var(--logo-shift) * 1.35)" : "var(--logo-shift)");
+          el.style.setProperty("--logo-dx", "calc(" + amp + " * " + (Math.random() > 0.5 ? 1 : -1) + ")");
+          el.classList.add("is-glitch");
+          el.classList.toggle("is-glitch-strong", strong);
+          clearTimeout(clearTimer);
+          clearTimer = setTimeout(function () {
+            el.classList.remove("is-glitch", "is-glitch-strong");
+          }, strong ? 280 : 190);
+        }
+        function schedule() {
+          var wait = hover ? 900 + Math.random() * 900 : 3000 + Math.random() * 2000;
+          timer = setTimeout(function () {
+            fire(Math.random() < 0.2);
+            schedule();
+          }, wait);
+        }
+        el.addEventListener("pointerenter", function () { hover = true; fire(false); });
+        el.addEventListener("pointerleave", function () { hover = false; });
+        schedule();
       })();
     </script>
   </body>
