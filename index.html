@@ -200,6 +200,9 @@
       (function () {
         var el = document.querySelector(".logo");
         if (!el) return;
+        if (/[?&]debug=1\b/.test(location.search) || location.search.indexOf("debug") >= 0) {
+          el.classList.add("is-debug");
+        }
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var hover = false;
         var timer = 0;
@@ -230,6 +233,7 @@
         }
         el.addEventListener("pointerenter", function () { hover = true; fire(false); });
         el.addEventListener("pointerleave", function () { hover = false; });
+        fire(false);
         schedule();
       })();
     </script>

@@ -212,7 +212,7 @@ img{max-width:100%;display:block}
 
   position: relative;
   display: block;
-  overflow: hidden;
+  overflow: visible;
   outline: none;
   cursor: default;
   color: var(--logo-color);
@@ -319,6 +319,16 @@ img{max-width:100%;display:block}
 .logo.is-glitch-strong .logo-rgb-r,
 .logo.is-glitch-strong .logo-rgb-b {
   opacity: 0.88;
+}
+
+.logo.is-debug {
+  outline: 2px solid #e23b2a;
+  outline-offset: 8px;
+  background: rgb(226 59 42 / 0.08);
+}
+
+.logo.is-debug.is-glitch {
+  outline-color: #4d8cff;
 }
 
 .scroll-hint {
