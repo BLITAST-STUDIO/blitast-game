@@ -177,9 +177,9 @@ img{max-width:100%;display:block}
 
 .hero-mark {
   position: absolute;
-  z-index: 3;
+  z-index: 45;
   left: 1.25rem;
-  bottom: 5.2rem;
+  bottom: 5.4rem;
   margin: 0;
 }
 
@@ -189,7 +189,7 @@ img{max-width:100%;display:block}
   outline: none;
   cursor: default;
   color: #e6e2db;
-  animation: logo-boot 1.15s steps(2, end) 0.15s both;
+  animation: logo-boot 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero-glitch-layer {
@@ -201,84 +201,85 @@ img{max-width:100%;display:block}
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0;
+  opacity: 0.85;
 }
 
 .hero-glitch-layer.is-cyan {
   color: #4d8cff;
-  mix-blend-mode: screen;
+  animation: glitch-cyan 2.8s steps(2, jump-none) infinite;
 }
 
 .hero-glitch-layer.is-red {
   color: #e23b2a;
-  mix-blend-mode: screen;
+  animation: glitch-red 2.4s steps(2, jump-none) infinite;
 }
 
 .hero-line {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(2.35rem, 10.4vw, 6.4rem);
+  font-size: clamp(2.05rem, 8.6vw, 5.1rem);
   font-weight: 800;
   font-feature-settings: "palt";
-  letter-spacing: -0.045em;
-  line-height: 0.82;
+  letter-spacing: -0.04em;
+  line-height: 0.86;
 }
 
 .hero-line.is-sub {
-  margin-top: 0.28em;
-  font-family: var(--font-sans);
-  font-size: clamp(0.92rem, 3.4vw, 1.85rem);
-  font-weight: 500;
-  letter-spacing: 0.42em;
-  line-height: 1;
-  color: color-mix(in oklab, #c9d4ff 62%, white);
+  margin-top: 0.02em;
+  letter-spacing: -0.04em;
+  color: inherit;
 }
 
 .hero-glitch:hover .is-cyan,
 .hero-glitch:focus-visible .is-cyan {
-  opacity: 0.9;
-  animation: glitch-cyan 0.42s steps(2, end) infinite;
+  opacity: 1;
+  animation: glitch-cyan 0.28s steps(2, jump-none) infinite;
 }
 
 .hero-glitch:hover .is-red,
 .hero-glitch:focus-visible .is-red {
-  opacity: 0.9;
-  animation: glitch-red 0.36s steps(2, end) infinite;
+  opacity: 1;
+  animation: glitch-red 0.22s steps(2, jump-none) infinite;
 }
 
 .hero-glitch:hover .is-base,
 .hero-glitch:focus-visible .is-base {
-  animation: glitch-base 0.4s steps(2, end) infinite;
+  animation: glitch-base 0.28s steps(2, jump-none) infinite;
 }
 
 @keyframes logo-boot {
   0% {
     opacity: 0;
-    filter: contrast(1.6) brightness(1.4);
-    clip-path: inset(40% 0 40% 0);
-    transform: translate(8px, -4px);
+    filter: contrast(1.8) brightness(1.5);
+    clip-path: inset(42% 0 42% 0);
+    transform: translate(12px, -6px);
   }
-  18% {
+  12% {
     opacity: 1;
-    clip-path: inset(12% 0 55% 0);
+    clip-path: inset(8% 0 62% 0);
+    transform: translate(-10px, 4px);
+  }
+  24% {
+    clip-path: inset(70% 0 2% 0);
+    transform: translate(8px, 0);
+  }
+  38% {
+    clip-path: inset(18% 0 40% 0);
     transform: translate(-6px, 3px);
   }
-  34% {
-    clip-path: inset(70% 0 4% 0);
-    transform: translate(5px, 0);
-  }
   52% {
-    clip-path: inset(8% 0 22% 0);
-    transform: translate(-3px, 2px);
-  }
-  70% {
     clip-path: inset(0 0 0 0);
     transform: none;
     filter: none;
   }
+  64% {
+    clip-path: inset(55% 0 18% 0);
+    transform: translate(7px, -3px);
+    filter: contrast(1.4);
+  }
   78% {
-    clip-path: inset(48% 0 30% 0);
-    transform: translate(4px, -2px);
+    clip-path: inset(6% 0 72% 0);
+    transform: translate(-8px, 2px);
   }
   100% {
     opacity: 1;
@@ -289,52 +290,52 @@ img{max-width:100%;display:block}
 }
 
 @keyframes glitch-cyan {
-  0% {
-    clip-path: inset(12% 0 68% 0);
-    transform: translate(7px, -2px);
-  }
-  20% {
-    clip-path: inset(62% 0 8% 0);
-    transform: translate(-9px, 3px);
-  }
-  40% {
-    clip-path: inset(4% 0 48% 0);
-    transform: translate(5px, 1px);
-  }
-  60% {
-    clip-path: inset(78% 0 6% 0);
-    transform: translate(-4px, -3px);
-  }
-  80% {
-    clip-path: inset(28% 0 38% 0);
-    transform: translate(8px, 2px);
-  }
+  0%,
+  82%,
   100% {
-    clip-path: inset(52% 0 18% 0);
-    transform: translate(-6px, 0);
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0, 0);
+  }
+  84% {
+    clip-path: inset(8% 0 62% 0);
+    transform: translate(10px, -3px);
+  }
+  88% {
+    clip-path: inset(58% 0 6% 0);
+    transform: translate(-12px, 4px);
+  }
+  92% {
+    clip-path: inset(22% 0 40% 0);
+    transform: translate(8px, 1px);
+  }
+  96% {
+    clip-path: inset(74% 0 4% 0);
+    transform: translate(-6px, -2px);
   }
 }
 
 @keyframes glitch-red {
-  0% {
-    clip-path: inset(58% 0 10% 0);
-    transform: translate(-8px, 2px);
-  }
-  25% {
-    clip-path: inset(6% 0 72% 0);
-    transform: translate(6px, -4px);
-  }
-  50% {
-    clip-path: inset(40% 0 28% 0);
-    transform: translate(-5px, 1px);
-  }
-  75% {
-    clip-path: inset(80% 0 4% 0);
-    transform: translate(9px, 3px);
-  }
+  0%,
+  78%,
   100% {
-    clip-path: inset(18% 0 54% 0);
-    transform: translate(-7px, -1px);
+    clip-path: inset(100% 0 0 0);
+    transform: translate(0, 0);
+  }
+  80% {
+    clip-path: inset(52% 0 12% 0);
+    transform: translate(-11px, 3px);
+  }
+  85% {
+    clip-path: inset(4% 0 70% 0);
+    transform: translate(9px, -4px);
+  }
+  90% {
+    clip-path: inset(36% 0 28% 0);
+    transform: translate(-7px, 2px);
+  }
+  95% {
+    clip-path: inset(78% 0 2% 0);
+    transform: translate(12px, 1px);
   }
 }
 
@@ -342,17 +343,19 @@ img{max-width:100%;display:block}
   0%,
   100% {
     transform: none;
-    filter: none;
+    text-shadow: none;
   }
-  30% {
-    transform: translate(2px, 0);
-    filter: contrast(1.15);
+  20% {
+    transform: translate(3px, 0);
+    text-shadow: -6px 0 #e23b2a, 6px 0 #4d8cff;
   }
-  55% {
-    transform: translate(-2px, 1px);
+  45% {
+    transform: translate(-4px, 1px);
+    text-shadow: 8px 0 #4d8cff, -5px 0 #e23b2a;
   }
-  80% {
-    transform: translate(1px, -1px);
+  70% {
+    transform: translate(2px, -1px);
+    text-shadow: -4px 0 #e23b2a;
   }
 }
 
@@ -630,7 +633,7 @@ img{max-width:100%;display:block}
 
   .hero-mark {
     left: 2rem;
-    bottom: 6.2rem;
+    bottom: 6.4rem;
   }
 
   .tategaki {
@@ -679,6 +682,8 @@ img{max-width:100%;display:block}
   .scroll-hint::after,
   .marquee-track,
   .hero-glitch,
+  .hero-glitch-layer.is-cyan,
+  .hero-glitch-layer.is-red,
   .hero-glitch:hover .is-cyan,
   .hero-glitch:hover .is-red,
   .hero-glitch:hover .is-base,
