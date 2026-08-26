@@ -181,29 +181,179 @@ img{max-width:100%;display:block}
   left: 1.25rem;
   bottom: 5.2rem;
   margin: 0;
-  pointer-events: none;
 }
 
-.hero-kicker {
+.hero-glitch {
+  position: relative;
   display: block;
-  margin-bottom: 0.35rem;
-  font-family: var(--font-display);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: color-mix(in oklab, #8a8f9a 70%, white);
-}
-
-.hero-name {
-  display: block;
+  outline: none;
+  cursor: default;
   color: #e6e2db;
+  animation: logo-boot 1.15s steps(2, end) 0.15s both;
+}
+
+.hero-glitch-layer {
+  display: block;
+}
+
+.hero-glitch-layer.is-cyan,
+.hero-glitch-layer.is-red {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hero-glitch-layer.is-cyan {
+  color: #4d8cff;
+  mix-blend-mode: screen;
+}
+
+.hero-glitch-layer.is-red {
+  color: #e23b2a;
+  mix-blend-mode: screen;
+}
+
+.hero-line {
+  display: block;
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 12vw, 7.2rem);
+  font-size: clamp(2.35rem, 10.4vw, 6.4rem);
   font-weight: 800;
   font-feature-settings: "palt";
   letter-spacing: -0.045em;
   line-height: 0.82;
+}
+
+.hero-line.is-sub {
+  margin-top: 0.28em;
+  font-family: var(--font-sans);
+  font-size: clamp(0.92rem, 3.4vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  line-height: 1;
+  color: color-mix(in oklab, #c9d4ff 62%, white);
+}
+
+.hero-glitch:hover .is-cyan,
+.hero-glitch:focus-visible .is-cyan {
+  opacity: 0.9;
+  animation: glitch-cyan 0.42s steps(2, end) infinite;
+}
+
+.hero-glitch:hover .is-red,
+.hero-glitch:focus-visible .is-red {
+  opacity: 0.9;
+  animation: glitch-red 0.36s steps(2, end) infinite;
+}
+
+.hero-glitch:hover .is-base,
+.hero-glitch:focus-visible .is-base {
+  animation: glitch-base 0.4s steps(2, end) infinite;
+}
+
+@keyframes logo-boot {
+  0% {
+    opacity: 0;
+    filter: contrast(1.6) brightness(1.4);
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(8px, -4px);
+  }
+  18% {
+    opacity: 1;
+    clip-path: inset(12% 0 55% 0);
+    transform: translate(-6px, 3px);
+  }
+  34% {
+    clip-path: inset(70% 0 4% 0);
+    transform: translate(5px, 0);
+  }
+  52% {
+    clip-path: inset(8% 0 22% 0);
+    transform: translate(-3px, 2px);
+  }
+  70% {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+    filter: none;
+  }
+  78% {
+    clip-path: inset(48% 0 30% 0);
+    transform: translate(4px, -2px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes glitch-cyan {
+  0% {
+    clip-path: inset(12% 0 68% 0);
+    transform: translate(7px, -2px);
+  }
+  20% {
+    clip-path: inset(62% 0 8% 0);
+    transform: translate(-9px, 3px);
+  }
+  40% {
+    clip-path: inset(4% 0 48% 0);
+    transform: translate(5px, 1px);
+  }
+  60% {
+    clip-path: inset(78% 0 6% 0);
+    transform: translate(-4px, -3px);
+  }
+  80% {
+    clip-path: inset(28% 0 38% 0);
+    transform: translate(8px, 2px);
+  }
+  100% {
+    clip-path: inset(52% 0 18% 0);
+    transform: translate(-6px, 0);
+  }
+}
+
+@keyframes glitch-red {
+  0% {
+    clip-path: inset(58% 0 10% 0);
+    transform: translate(-8px, 2px);
+  }
+  25% {
+    clip-path: inset(6% 0 72% 0);
+    transform: translate(6px, -4px);
+  }
+  50% {
+    clip-path: inset(40% 0 28% 0);
+    transform: translate(-5px, 1px);
+  }
+  75% {
+    clip-path: inset(80% 0 4% 0);
+    transform: translate(9px, 3px);
+  }
+  100% {
+    clip-path: inset(18% 0 54% 0);
+    transform: translate(-7px, -1px);
+  }
+}
+
+@keyframes glitch-base {
+  0%,
+  100% {
+    transform: none;
+    filter: none;
+  }
+  30% {
+    transform: translate(2px, 0);
+    filter: contrast(1.15);
+  }
+  55% {
+    transform: translate(-2px, 1px);
+  }
+  80% {
+    transform: translate(1px, -1px);
+  }
 }
 
 .scroll-hint {
@@ -527,8 +677,20 @@ img{max-width:100%;display:block}
 
 @media (prefers-reduced-motion: reduce) {
   .scroll-hint::after,
-  .marquee-track {
+  .marquee-track,
+  .hero-glitch,
+  .hero-glitch:hover .is-cyan,
+  .hero-glitch:hover .is-red,
+  .hero-glitch:hover .is-base,
+  .hero-glitch:focus-visible .is-cyan,
+  .hero-glitch:focus-visible .is-red,
+  .hero-glitch:focus-visible .is-base {
     animation: none;
+  }
+
+  .hero-glitch-layer.is-cyan,
+  .hero-glitch-layer.is-red {
+    display: none;
   }
 
   .frame img {
