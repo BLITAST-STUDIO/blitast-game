@@ -194,5 +194,34 @@
         }
       })();
     </script>
+
+    <script>
+      (function () {
+        var el = document.querySelector(".hero-glitch");
+        if (!el) return;
+        var hover = false;
+        var burstUntil = 0;
+        el.addEventListener("pointerenter", function () { hover = true; });
+        el.addEventListener("pointerleave", function () { hover = false; });
+        function tick(now) {
+          if (now > burstUntil && Math.random() < (hover ? 0.18 : 0.035)) {
+            burstUntil = now + (hover ? 220 : 160);
+          }
+          var hit = now < burstUntil;
+          var amp = hover ? 14 : 9;
+          var gx = hit ? (Math.random() * 2 - 1) * amp : 0;
+          var gy = hit ? (Math.random() * 2 - 1) * (amp * 0.35) : 0;
+          var gs = hit ? 8 + Math.random() * 10 : 4;
+          el.style.setProperty("--gx", gx.toFixed(1) + "px");
+          el.style.setProperty("--gy", gy.toFixed(1) + "px");
+          el.style.setProperty("--gs", gs.toFixed(1) + "px");
+          el.style.setProperty("--go", hit || hover ? "0.85" : "0.5");
+          el.style.setProperty("--cx", hit ? (6 + Math.random() * 10).toFixed(1) + "px" : "3px");
+          el.style.setProperty("--rx", hit ? (-6 - Math.random() * 10).toFixed(1) + "px" : "-3px");
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      })();
+    </script>
   </body>
 </html>
