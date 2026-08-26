@@ -373,6 +373,7 @@ img{max-width:100%;display:block}
 .frame {
   position: relative;
   overflow: hidden;
+  aspect-ratio: 16 / 9;
   border: 1px solid color-mix(in oklab, var(--fg) 14%, transparent);
   background: #050506;
 }
@@ -380,13 +381,11 @@ img{max-width:100%;display:block}
 .frame img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   filter: saturate(0.92) contrast(1.04);
-  transform: scale(1.001);
-  transition:
-    filter 500ms var(--ease-out),
-    transform 700ms var(--ease-out);
+  transition: filter 500ms var(--ease-out);
 }
 
 .lib-featured:hover .frame img,
@@ -394,7 +393,6 @@ img{max-width:100%;display:block}
 .lib-featured:focus-visible .frame img,
 .lib-card:focus-visible .frame img {
   filter: saturate(1.06) contrast(1.08);
-  transform: scale(1.045);
 }
 
 .lib-featured:focus-visible .frame,
@@ -622,10 +620,6 @@ img{max-width:100%;display:block}
     margin-bottom: 2.25rem;
   }
 
-  .lib-featured .frame img {
-    aspect-ratio: 16 / 10;
-  }
-
   .lib-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
@@ -640,7 +634,6 @@ img{max-width:100%;display:block}
 
   .frame img {
     transition: none;
-    transform: none;
   }
 }
 
