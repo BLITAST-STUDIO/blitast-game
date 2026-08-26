@@ -12,7 +12,7 @@ window.BLITAST = {
     itch: "https://blitastxyz.itch.io/",
     x: "https://x.com/blitast_studio",
     xHandle: "@blitast_studio",
-    github: "https://github.com/okamotoryolee",
+    github: "https://github.com/BLITAST-STUDIO",
   },
   also: [
     {
