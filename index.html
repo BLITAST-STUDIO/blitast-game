@@ -45,15 +45,6 @@
             <span class="logo-line">BLITAST</span>
             <span class="logo-line">STUDIO</span>
           </span>
-          <span class="logo-rgb logo-rgb-r" aria-hidden="true">
-            <span class="logo-line">BLITAST</span>
-            <span class="logo-line">STUDIO</span>
-          </span>
-          <span class="logo-rgb logo-rgb-b" aria-hidden="true">
-            <span class="logo-line">BLITAST</span>
-            <span class="logo-line">STUDIO</span>
-          </span>
-          <span class="logo-scan" aria-hidden="true"></span>
         </span>
       </p>
       <p class="tategaki" aria-hidden="true">個人が作る、すぐ遊べる小さなゲームたち</p>
@@ -196,47 +187,5 @@
       })();
     </script>
 
-    <script>
-      (function () {
-        var el = document.querySelector(".logo");
-        if (!el) return;
-        if (/[?&]debug=1\b/.test(location.search) || location.search.indexOf("debug") >= 0) {
-          el.classList.add("is-debug");
-        }
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        var hover = false;
-        var timer = 0;
-        var clearTimer = 0;
-        function slice() {
-          var a = 2 + Math.random() * 28;
-          var b = 38 + Math.random() * 28;
-          return "inset(" + a.toFixed(0) + "% 0 " + b.toFixed(0) + "% 0)";
-        }
-        function fire(strong) {
-          el.style.setProperty("--logo-clip-r", slice());
-          el.style.setProperty("--logo-clip-b", slice());
-          el.style.setProperty("--logo-scan-y", (12 + Math.random() * 70).toFixed(0) + "%");
-          var amp = strong ? 14 : 8;
-          el.style.setProperty("--logo-dx", ((Math.random() > 0.5 ? 1 : -1) * amp) + "px");
-          el.classList.add("is-glitch");
-          el.classList.toggle("is-glitch-strong", strong);
-          clearTimeout(clearTimer);
-          clearTimer = setTimeout(function () {
-            el.classList.remove("is-glitch", "is-glitch-strong");
-          }, strong ? 240 : 150);
-        }
-        function schedule() {
-          var wait = hover ? 1600 + Math.random() * 1200 : 3200 + Math.random() * 1800;
-          timer = setTimeout(function () {
-            fire(Math.random() < 0.25);
-            schedule();
-          }, wait);
-        }
-        el.addEventListener("pointerenter", function () { hover = true; fire(false); });
-        el.addEventListener("pointerleave", function () { hover = false; });
-        fire(false);
-        schedule();
-      })();
-    </script>
   </body>
 </html>

@@ -184,81 +184,61 @@ img{max-width:100%;display:block}
 }
 
 /*
-  .logo — refined glitch lockup
-  --logo-aber-r / --logo-aber-b   channel colors
-  --logo-hot                      hover RGB offset
-  --logo-hit                      regular glitch offset
-  --logo-strong                   rare strong offset
-  --logo-scan                     idle scanline (0–1)
+  .logo — hover sheen that borrows the monument's red / blue
+  --logo-ember  right light
+  --logo-ice    left light
+  --logo-shine  specular peak
 */
 .logo {
   --logo-color: #e6e2db;
-  --logo-aber-r: #e23b2a;
-  --logo-aber-b: #4d8cff;
-  --logo-hot: 7px;
-  --logo-hit: 11px;
-  --logo-strong: 16px;
-  --logo-scan: 0.05;
-  --logo-dx: 0px;
-  --logo-clip-r: inset(10% 0 62% 0);
-  --logo-clip-b: inset(58% 0 8% 0);
-  --logo-scan-y: 40%;
+  --logo-ember: #e23b2a;
+  --logo-ice: #6ea2ff;
+  --logo-shine: #f7f4ee;
 
   position: relative;
-  display: block;
-  overflow: visible;
+  display: inline-block;
   outline: none;
   cursor: default;
   color: var(--logo-color);
-  isolation: isolate;
 }
 
 .logo-core {
-  position: relative;
-  z-index: 1;
   display: block;
-}
-
-.logo-rgb {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: block;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.logo-rgb-r {
-  color: var(--logo-aber-r);
-}
-
-.logo-rgb-b {
-  color: var(--logo-aber-b);
-}
-
-.logo-scan {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: var(--logo-scan);
-  background: repeating-linear-gradient(
-    to bottom,
-    rgb(255 255 255 / 0.1) 0 1px,
-    transparent 1px 4px
+  color: transparent;
+  background-image: linear-gradient(
+    105deg,
+    var(--logo-color) 0%,
+    var(--logo-color) 36%,
+    var(--logo-ice) 45%,
+    var(--logo-shine) 50%,
+    var(--logo-ember) 55%,
+    var(--logo-color) 64%,
+    var(--logo-color) 100%
   );
-  mix-blend-mode: overlay;
+  background-size: 240% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition:
+    background-position 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s ease;
 }
 
-.logo-scan::after {
+.logo::after {
   content: "";
-  position: absolute;
-  left: -4%;
-  right: -4%;
-  top: var(--logo-scan-y);
-  height: 2px;
-  background: #f2f6ff;
-  opacity: 0;
+  display: block;
+  width: 0;
+  height: 1px;
+  margin-top: 0.7em;
+  background: linear-gradient(
+    90deg,
+    var(--logo-ice),
+    var(--logo-shine),
+    var(--logo-ember)
+  );
+  opacity: 0.85;
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .logo-line {
@@ -275,64 +255,17 @@ img{max-width:100%;display:block}
   margin-top: 0.02em;
 }
 
-.logo:hover .logo-rgb-r,
-.logo:focus-visible .logo-rgb-r {
-  opacity: 0.9;
-  clip-path: inset(6% 0 68% 0);
-  transform: translate(var(--logo-hot), 0);
+.logo:hover .logo-core,
+.logo:focus-visible .logo-core {
+  background-position: 0% 50%;
+  filter:
+    drop-shadow(0 0 16px rgb(110 162 255 / 0.28))
+    drop-shadow(0 0 26px rgb(226 59 42 / 0.16));
 }
 
-.logo:hover .logo-rgb-b,
-.logo:focus-visible .logo-rgb-b {
-  opacity: 0.9;
-  clip-path: inset(64% 0 6% 0);
-  transform: translate(calc(var(--logo-hot) * -1), 0);
-}
-
-.logo.is-glitch .logo-core {
-  transform: translate(var(--logo-dx), 0);
-}
-
-.logo.is-glitch .logo-rgb-r {
-  opacity: 1;
-  clip-path: var(--logo-clip-r);
-  transform: translate(var(--logo-hit), -1px);
-}
-
-.logo.is-glitch .logo-rgb-b {
-  opacity: 1;
-  clip-path: var(--logo-clip-b);
-  transform: translate(calc(var(--logo-hit) * -1), 1px);
-}
-
-.logo.is-glitch .logo-scan {
-  opacity: 0.14;
-}
-
-.logo.is-glitch .logo-scan::after {
-  opacity: 0.7;
-}
-
-.logo.is-glitch-strong .logo-core {
-  transform: translate(var(--logo-dx), 0) skewX(-4deg);
-}
-
-.logo.is-glitch-strong .logo-rgb-r {
-  transform: translate(var(--logo-strong), -2px);
-}
-
-.logo.is-glitch-strong .logo-rgb-b {
-  transform: translate(calc(var(--logo-strong) * -1), 2px);
-}
-
-.logo.is-debug {
-  outline: 2px solid #e23b2a;
-  outline-offset: 8px;
-  background: rgb(226 59 42 / 0.08);
-}
-
-.logo.is-debug.is-glitch {
-  outline-color: #4d8cff;
+.logo:hover::after,
+.logo:focus-visible::after {
+  width: 100%;
 }
 
 .scroll-hint {
@@ -660,8 +593,15 @@ img{max-width:100%;display:block}
     animation: none;
   }
 
-  .frame img {
+  .frame img,
+  .logo-core,
+  .logo::after {
     transition: none;
+  }
+
+  .logo:hover .logo-core,
+  .logo:focus-visible .logo-core {
+    background-position: 0% 50%;
   }
 }
 
