@@ -183,13 +183,17 @@ img{max-width:100%;display:block}
   margin: 0;
 }
 
+@property --logo-p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /*
-  .logo — hover sheen that borrows the monument's red / blue
-  --logo-ember  right light
-  --logo-ice    left light
-  --logo-shine  specular peak
+  .logo — specular sheen driven by --logo-p (0 idle → 1 hover)
 */
 .logo {
+  --logo-p: 0;
   --logo-color: #e6e2db;
   --logo-ember: #e23b2a;
   --logo-ice: #6ea2ff;
@@ -206,29 +210,25 @@ img{max-width:100%;display:block}
   display: block;
   color: transparent;
   background-image: linear-gradient(
-    105deg,
+    100deg,
     var(--logo-color) 0%,
-    var(--logo-color) 36%,
-    var(--logo-ice) 45%,
-    var(--logo-shine) 50%,
-    var(--logo-ember) 55%,
-    var(--logo-color) 64%,
+    var(--logo-color) calc(-48% + 196% * var(--logo-p)),
+    var(--logo-ice) calc(-22% + 196% * var(--logo-p)),
+    var(--logo-shine) calc(-6% + 196% * var(--logo-p)),
+    var(--logo-ember) calc(10% + 196% * var(--logo-p)),
+    var(--logo-color) calc(36% + 196% * var(--logo-p)),
     var(--logo-color) 100%
   );
-  background-size: 240% 100%;
-  background-position: 100% 50%;
+  background-size: 100% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition:
-    background-position 1.05s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.7s ease;
 }
 
 .logo::after {
   content: "";
   display: block;
-  width: 0;
+  width: 100%;
   height: 1px;
   margin-top: 0.7em;
   background: linear-gradient(
@@ -237,8 +237,9 @@ img{max-width:100%;display:block}
     var(--logo-shine),
     var(--logo-ember)
   );
+  transform: scaleX(var(--logo-p));
+  transform-origin: left center;
   opacity: 0.85;
-  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .logo-line {
@@ -253,19 +254,6 @@ img{max-width:100%;display:block}
 
 .logo-line + .logo-line {
   margin-top: 0.02em;
-}
-
-.logo:hover .logo-core,
-.logo:focus-visible .logo-core {
-  background-position: 0% 50%;
-  filter:
-    drop-shadow(0 0 16px rgb(110 162 255 / 0.28))
-    drop-shadow(0 0 26px rgb(226 59 42 / 0.16));
-}
-
-.logo:hover::after,
-.logo:focus-visible::after {
-  width: 100%;
 }
 
 .scroll-hint {
@@ -593,15 +581,8 @@ img{max-width:100%;display:block}
     animation: none;
   }
 
-  .frame img,
-  .logo-core,
-  .logo::after {
+  .frame img {
     transition: none;
-  }
-
-  .logo:hover .logo-core,
-  .logo:focus-visible .logo-core {
-    background-position: 0% 50%;
   }
 }
 

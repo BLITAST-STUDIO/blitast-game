@@ -187,5 +187,30 @@
       })();
     </script>
 
+
+    <script>
+      (function () {
+        var el = document.querySelector(".logo");
+        if (!el) return;
+        var hover = false;
+        var p = 0;
+        var prev = performance.now();
+        function tick(now) {
+          var dt = Math.min(0.05, (now - prev) / 1000);
+          prev = now;
+          var target = hover ? 1 : 0;
+          var k = 1 - Math.exp(-dt / (hover ? 0.38 : 0.48));
+          p += (target - p) * k;
+          if (Math.abs(target - p) < 0.001) p = target;
+          el.style.setProperty("--logo-p", p.toFixed(4));
+          requestAnimationFrame(tick);
+        }
+        el.addEventListener("pointerenter", function () { hover = true; });
+        el.addEventListener("pointerleave", function () { hover = false; });
+        el.addEventListener("focus", function () { hover = true; });
+        el.addEventListener("blur", function () { hover = false; });
+        requestAnimationFrame(tick);
+      })();
+    </script>
   </body>
 </html>
