@@ -96,8 +96,8 @@ img{max-width:100%;display:block}
   position: absolute;
   inset: 8% 8% 18%;
   background:
-    radial-gradient(ellipse at 62% 20%, rgb(160 176 210 / 0.07) 0%, transparent 52%),
-    radial-gradient(ellipse at 48% 48%, rgb(90 28 22 / 0.05) 0%, transparent 40%);
+    radial-gradient(ellipse at 68% 22%, rgb(70 120 220 / 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 32% 58%, rgb(160 40 32 / 0.08) 0%, transparent 46%);
   z-index: 0;
 }
 
