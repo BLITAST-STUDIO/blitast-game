@@ -10,7 +10,7 @@
 window.BLITAST = {
   studio: {
     name: "BLITAST GAME",
-    tagline: "個人が作る、すぐ遊べる小さなゲームたち",
+    tagline: "個人開発のさまざまなゲーム",
     itch: "https://blitastxyz.itch.io/",
     x: "https://x.com/blitast_studio",
     xHandle: "@blitast_studio",
