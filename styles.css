@@ -316,13 +316,21 @@ img{max-width:100%;display:block}
   background: linear-gradient(
     180deg,
     rgb(5 5 6 / 0) 0%,
-    rgb(5 5 6 / 0.42) 22%,
-    rgb(5 5 6 / 0.78) 100%
+    rgb(5 5 6 / 0.42) 18%,
+    rgb(5 5 6 / 0.86) 100%
   );
 }
 
+.lib-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
 .kicker {
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.35rem;
   font-family: var(--font-display);
   font-size: 0.68rem;
   font-weight: 700;
@@ -331,17 +339,35 @@ img{max-width:100%;display:block}
   color: var(--accent);
 }
 
-.featured {
+.lib-lead {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+}
+
+.lib-count {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  color: color-mix(in oklab, var(--fg) 55%, transparent);
+}
+
+.lib-featured,
+.lib-card {
   position: relative;
   display: block;
-  max-width: 28rem;
   color: inherit;
   outline: none;
 }
 
-.featured:focus-visible .frame {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
+.lib-featured {
+  margin-bottom: 1.75rem;
 }
 
 .frame {
@@ -354,37 +380,92 @@ img{max-width:100%;display:block}
 .frame img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   filter: saturate(0.92) contrast(1.04);
-  transition: filter 500ms var(--ease-out);
+  transform: scale(1.001);
+  transition:
+    filter 500ms var(--ease-out),
+    transform 700ms var(--ease-out);
 }
 
-.featured:hover .frame img {
-  filter: saturate(1.04) contrast(1.06);
+.lib-featured:hover .frame img,
+.lib-card:hover .frame img,
+.lib-featured:focus-visible .frame img,
+.lib-card:focus-visible .frame img {
+  filter: saturate(1.06) contrast(1.08);
+  transform: scale(1.045);
+}
+
+.lib-featured:focus-visible .frame,
+.lib-card:focus-visible .frame {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.lib-play {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  z-index: 1;
+  padding: 0.35rem 0.7rem 0.3rem;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  background: rgb(8 8 10 / 0.72);
+  backdrop-filter: blur(10px);
+  color: #f2eee6;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.lib-featured:hover .frame,
+.lib-card:hover .frame {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, #6ea2ff 35%, transparent),
+    0 18px 40px rgb(0 0 0 / 0.45);
 }
 
 .meta {
   display: grid;
-  gap: 0.75rem;
-  padding: 1.35rem 0.05rem 0;
+  gap: 0.7rem;
+  padding: 1.25rem 0.05rem 0;
 }
 
-.meta h2 {
+.meta h2,
+.lib-meta h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: var(--text-title);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.15;
 }
 
-.blurb {
+.meta h2 {
+  font-size: var(--text-title);
+}
+
+.lib-genre {
   margin: 0;
-  max-width: 36rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.blurb,
+.lib-meta p {
+  margin: 0;
   font-size: var(--text-body);
-  line-height: 1.75;
+  line-height: 1.7;
   color: var(--muted);
+}
+
+.lib-meta p {
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .seal {
@@ -392,7 +473,7 @@ img{max-width:100%;display:block}
   min-height: 2.75rem;
   align-items: center;
   gap: 0.7rem;
-  margin-top: 0.25rem;
+  margin-top: 0.1rem;
   color: var(--accent);
   font-family: var(--font-display);
   font-size: 1.05rem;
@@ -408,59 +489,26 @@ img{max-width:100%;display:block}
   box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 22%, transparent);
 }
 
-.also {
-  margin-top: 2.75rem;
-  max-width: 28rem;
-}
-
-.kicker-also {
-  color: var(--muted);
-}
-
-.also ul {
+.lib-grid {
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 1.25rem;
+  gap: 1.35rem;
 }
 
-.also-card {
+.lib-meta {
   display: grid;
-  grid-template-columns: 7.5rem 1fr;
-  gap: 1rem;
-  align-items: center;
-  color: inherit;
-  outline: none;
+  gap: 0.4rem;
+  padding: 0.9rem 0.05rem 0;
 }
 
-.also-card .frame {
-  margin: 0;
-}
-
-.also-card:focus-visible .frame {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.also-meta h3 {
-  margin: 0 0 0.35rem;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-}
-
-.also-meta p {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.65;
-  color: var(--muted);
+.lib-meta h3 {
+  font-size: 1.12rem;
 }
 
 .all-games {
-  margin: 1.75rem 0 0;
+  margin: 2rem 0 0;
 }
 
 .all-games a {
@@ -566,12 +614,21 @@ img{max-width:100%;display:block}
     padding: 10vh 2rem 4.5rem;
   }
 
-  .featured {
-    max-width: 32rem;
+  .lib-featured {
+    display: grid;
+    grid-template-columns: 1.25fr 0.9fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2.25rem;
   }
 
-  .also {
-    max-width: 32rem;
+  .lib-featured .frame img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .lib-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
 }
 
@@ -583,6 +640,7 @@ img{max-width:100%;display:block}
 
   .frame img {
     transition: none;
+    transform: none;
   }
 }
 
