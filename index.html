@@ -68,6 +68,18 @@
       </p>
     </section>
     <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee-track"></div></div>
+
+    <div class="bgm-dock" id="bgm-dock">
+      <audio id="bgm-audio" src="audio/bgm.mp3" loop preload="metadata" playsinline></audio>
+      <button type="button" class="bgm-toggle" id="bgm-toggle" aria-pressed="false" aria-label="BGMを再生">
+        <span class="bgm-icon" aria-hidden="true">♪</span>
+      </button>
+      <label class="bgm-vol-wrap" for="bgm-vol">
+        <span class="sr-only">音量</span>
+        <input type="range" id="bgm-vol" class="bgm-vol" min="0" max="1" step="0.01" value="0.32" />
+      </label>
+    </div>
+
     <script src="featured.js"></script>
     <script src="field.js"></script>
     <script>
@@ -109,6 +121,64 @@
           track.innerHTML = items.concat(items).map(function (item) {
             return item === "PLAY" ? "<span data-mark>PLAY</span>" : "<span>" + item + "</span>";
           }).join("");
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        var audio = document.getElementById("bgm-audio");
+        var toggle = document.getElementById("bgm-toggle");
+        var vol = document.getElementById("bgm-vol");
+        if (!audio || !toggle || !vol) return;
+
+        var KEY_ON = "blitast-bgm-on";
+        var KEY_VOL = "blitast-bgm-vol";
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function setPlaying(on) {
+          toggle.setAttribute("aria-pressed", on ? "true" : "false");
+          toggle.setAttribute("aria-label", on ? "BGMを停止" : "BGMを再生");
+          toggle.classList.toggle("is-on", on);
+        }
+
+        try {
+          var savedVol = localStorage.getItem(KEY_VOL);
+          if (savedVol != null) vol.value = savedVol;
+        } catch (e) {}
+        audio.volume = Number(vol.value);
+
+        vol.addEventListener("input", function () {
+          audio.volume = Number(vol.value);
+          try { localStorage.setItem(KEY_VOL, vol.value); } catch (e) {}
+        });
+
+        toggle.addEventListener("click", function () {
+          if (audio.paused) {
+            audio.play().then(function () {
+              setPlaying(true);
+              try { localStorage.setItem(KEY_ON, "1"); } catch (e) {}
+            }).catch(function () {
+              setPlaying(false);
+            });
+          } else {
+            audio.pause();
+            setPlaying(false);
+            try { localStorage.setItem(KEY_ON, "0"); } catch (e) {}
+          }
+        });
+
+        audio.addEventListener("ended", function () {
+          setPlaying(!audio.paused);
+        });
+
+        if (!reduce) {
+          try {
+            if (localStorage.getItem(KEY_ON) === "1") {
+              audio.play().then(function () { setPlaying(true); }).catch(function () {
+                setPlaying(false);
+              });
+            }
+          } catch (e) {}
         }
       })();
     </script>
