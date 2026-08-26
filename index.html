@@ -208,26 +208,27 @@
         var timer = 0;
         var clearTimer = 0;
         function slice() {
-          var a = 4 + Math.random() * 40;
-          var b = 8 + Math.random() * 40;
+          var a = 2 + Math.random() * 28;
+          var b = 38 + Math.random() * 28;
           return "inset(" + a.toFixed(0) + "% 0 " + b.toFixed(0) + "% 0)";
         }
         function fire(strong) {
           el.style.setProperty("--logo-clip-r", slice());
           el.style.setProperty("--logo-clip-b", slice());
-          var amp = strong ? "var(--logo-shift-strong)" : (hover ? "calc(var(--logo-shift) * 1.35)" : "var(--logo-shift)");
-          el.style.setProperty("--logo-dx", "calc(" + amp + " * " + (Math.random() > 0.5 ? 1 : -1) + ")");
+          el.style.setProperty("--logo-scan-y", (12 + Math.random() * 70).toFixed(0) + "%");
+          var amp = strong ? 14 : 8;
+          el.style.setProperty("--logo-dx", ((Math.random() > 0.5 ? 1 : -1) * amp) + "px");
           el.classList.add("is-glitch");
           el.classList.toggle("is-glitch-strong", strong);
           clearTimeout(clearTimer);
           clearTimer = setTimeout(function () {
             el.classList.remove("is-glitch", "is-glitch-strong");
-          }, strong ? 280 : 190);
+          }, strong ? 240 : 150);
         }
         function schedule() {
-          var wait = hover ? 900 + Math.random() * 900 : 3000 + Math.random() * 2000;
+          var wait = hover ? 1600 + Math.random() * 1200 : 3200 + Math.random() * 1800;
           timer = setTimeout(function () {
-            fire(Math.random() < 0.2);
+            fire(Math.random() < 0.25);
             schedule();
           }, wait);
         }

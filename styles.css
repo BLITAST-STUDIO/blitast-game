@@ -185,30 +185,24 @@ img{max-width:100%;display:block}
 
 /*
   .logo — refined glitch lockup
-  --logo-aber           idle RGB split
-  --logo-aber-hot       hover split
-  --logo-aber-hit       regular glitch split
-  --logo-aber-strong    rare strong split
-  --logo-shift          regular x-nudge
-  --logo-shift-strong   rare x-nudge
-  --logo-scan           scanline strength (0–1)
-  --logo-duration       burst length
+  --logo-aber-r / --logo-aber-b   channel colors
+  --logo-hot                      hover RGB offset
+  --logo-hit                      regular glitch offset
+  --logo-strong                   rare strong offset
+  --logo-scan                     idle scanline (0–1)
 */
 .logo {
   --logo-color: #e6e2db;
   --logo-aber-r: #e23b2a;
   --logo-aber-b: #4d8cff;
-  --logo-aber: 1.5px;
-  --logo-aber-hot: 2.5px;
-  --logo-aber-hit: 5px;
-  --logo-aber-strong: 8px;
-  --logo-shift: 3px;
-  --logo-shift-strong: 6px;
-  --logo-scan: 0.07;
-  --logo-duration: 190ms;
+  --logo-hot: 7px;
+  --logo-hit: 11px;
+  --logo-strong: 16px;
+  --logo-scan: 0.05;
   --logo-dx: 0px;
-  --logo-clip-r: inset(18% 0 55% 0);
-  --logo-clip-b: inset(52% 0 12% 0);
+  --logo-clip-r: inset(10% 0 62% 0);
+  --logo-clip-b: inset(58% 0 8% 0);
+  --logo-scan-y: 40%;
 
   position: relative;
   display: block;
@@ -223,13 +217,6 @@ img{max-width:100%;display:block}
   position: relative;
   z-index: 1;
   display: block;
-  text-shadow:
-    var(--logo-aber) 0 0 color-mix(in oklab, var(--logo-aber-r) 55%, transparent),
-    calc(var(--logo-aber) * -1) 0 0
-      color-mix(in oklab, var(--logo-aber-b) 55%, transparent);
-  transition:
-    text-shadow 280ms ease,
-    transform 280ms ease;
 }
 
 .logo-rgb {
@@ -257,10 +244,21 @@ img{max-width:100%;display:block}
   opacity: var(--logo-scan);
   background: repeating-linear-gradient(
     to bottom,
-    rgb(255 255 255 / 0.11) 0 1px,
-    transparent 1px 3px
+    rgb(255 255 255 / 0.1) 0 1px,
+    transparent 1px 4px
   );
   mix-blend-mode: overlay;
+}
+
+.logo-scan::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: var(--logo-scan-y);
+  height: 2px;
+  background: #f2f6ff;
+  opacity: 0;
 }
 
 .logo-line {
@@ -277,48 +275,54 @@ img{max-width:100%;display:block}
   margin-top: 0.02em;
 }
 
-.logo:hover .logo-core,
-.logo:focus-visible .logo-core {
-  text-shadow:
-    var(--logo-aber-hot) 0 0
-      color-mix(in oklab, var(--logo-aber-r) 70%, transparent),
-    calc(var(--logo-aber-hot) * -1) 0 0
-      color-mix(in oklab, var(--logo-aber-b) 70%, transparent);
+.logo:hover .logo-rgb-r,
+.logo:focus-visible .logo-rgb-r {
+  opacity: 0.9;
+  clip-path: inset(6% 0 68% 0);
+  transform: translate(var(--logo-hot), 0);
+}
+
+.logo:hover .logo-rgb-b,
+.logo:focus-visible .logo-rgb-b {
+  opacity: 0.9;
+  clip-path: inset(64% 0 6% 0);
+  transform: translate(calc(var(--logo-hot) * -1), 0);
 }
 
 .logo.is-glitch .logo-core {
   transform: translate(var(--logo-dx), 0);
-  text-shadow:
-    var(--logo-aber-hit) 0 0 var(--logo-aber-r),
-    calc(var(--logo-aber-hit) * -1) 0 0 var(--logo-aber-b);
-  transition-duration: 60ms;
 }
 
 .logo.is-glitch .logo-rgb-r {
-  opacity: 0.72;
+  opacity: 1;
   clip-path: var(--logo-clip-r);
-  transform: translate(var(--logo-dx), -1px);
+  transform: translate(var(--logo-hit), -1px);
 }
 
 .logo.is-glitch .logo-rgb-b {
-  opacity: 0.72;
+  opacity: 1;
   clip-path: var(--logo-clip-b);
-  transform: translate(calc(var(--logo-dx) * -1), 1px);
+  transform: translate(calc(var(--logo-hit) * -1), 1px);
 }
 
 .logo.is-glitch .logo-scan {
-  opacity: 0.16;
+  opacity: 0.14;
+}
+
+.logo.is-glitch .logo-scan::after {
+  opacity: 0.7;
 }
 
 .logo.is-glitch-strong .logo-core {
-  text-shadow:
-    var(--logo-aber-strong) 0 0 var(--logo-aber-r),
-    calc(var(--logo-aber-strong) * -1) 0 0 var(--logo-aber-b);
+  transform: translate(var(--logo-dx), 0) skewX(-4deg);
 }
 
-.logo.is-glitch-strong .logo-rgb-r,
+.logo.is-glitch-strong .logo-rgb-r {
+  transform: translate(var(--logo-strong), -2px);
+}
+
 .logo.is-glitch-strong .logo-rgb-b {
-  opacity: 0.88;
+  transform: translate(calc(var(--logo-strong) * -1), 2px);
 }
 
 .logo.is-debug {
