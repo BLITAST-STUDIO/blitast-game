@@ -408,19 +408,20 @@ img{max-width:100%;display:block}
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 2;
   background: linear-gradient(
     105deg,
-    transparent 28%,
-    rgb(110 162 255 / 0.18) 46%,
-    rgb(255 255 255 / 0.28) 50%,
-    rgb(226 59 42 / 0.16) 54%,
-    transparent 72%
+    transparent 18%,
+    rgb(110 162 255 / 0.0) 32%,
+    rgb(110 162 255 / 0.45) 46%,
+    rgb(255 255 255 / 0.7) 50%,
+    rgb(226 59 42 / 0.42) 54%,
+    rgb(226 59 42 / 0) 68%,
+    transparent 82%
   );
+  mix-blend-mode: screen;
   opacity: 0;
-  transform: translateX(-55%);
-  transition:
-    transform 1.05s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.35s ease;
+  transform: translateX(-80%);
 }
 
 .frame img {
@@ -448,8 +449,24 @@ img{max-width:100%;display:block}
 .lib-card:hover .frame::after,
 .lib-featured:focus-visible .frame::after,
 .lib-card:focus-visible .frame::after {
-  opacity: 1;
-  transform: translateX(55%);
+  animation: thumb-sheen 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes thumb-sheen {
+  0% {
+    opacity: 0;
+    transform: translateX(-80%);
+  }
+  12% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(80%);
+  }
 }
 
 .lib-featured:focus-visible .frame,
@@ -705,7 +722,6 @@ img{max-width:100%;display:block}
   }
 
   .frame img,
-  .frame::after,
   .lib-play {
     transition: none;
     transform: none;
