@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "PURA",
+      url: "https://blitastxyz.itch.io/pura",
+      blurb: "散らばる雫を集め、ひとつの核にする。同色は融け合い、混色は純度を削る。",
+      cover: "games/pura.jpg",
+      coverAlt: "PURA — 暗い水面に浮かぶ色の雫",
+      genre: "Puzzle",
+      featured: true,
+    },
+    {
       title: "Buttered Cat Flappy Paradox",
       url: "https://blitastxyz.itch.io/buttered-cat-flappy-paradox",
       blurb: "背中にバタートーストを乗せた猫。クリックかスペースで飛び、どこまで生き残れるか。",
       cover: "games/buttered-cat.jpg",
       coverAlt: "Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫",
       genre: "Arcade",
-      featured: true,
     },
     {
       title: "おかえりひつじ",
