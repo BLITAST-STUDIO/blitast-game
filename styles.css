@@ -411,15 +411,15 @@ img{max-width:100%;display:block}
   z-index: 2;
   background: linear-gradient(
     105deg,
-    transparent 22%,
-    rgb(110 162 255 / 0) 38%,
-    rgb(110 162 255 / 0.16) 47%,
-    rgb(255 255 255 / 0.22) 50%,
-    rgb(226 59 42 / 0.14) 53%,
-    rgb(226 59 42 / 0) 62%,
-    transparent 78%
+    transparent 20%,
+    rgb(110 162 255 / 0) 36%,
+    rgb(110 162 255 / 0.28) 47%,
+    rgb(255 255 255 / 0.4) 50%,
+    rgb(226 59 42 / 0.24) 53%,
+    rgb(226 59 42 / 0) 64%,
+    transparent 80%
   );
-  mix-blend-mode: overlay;
+  mix-blend-mode: screen;
   opacity: 0;
   transform: translateX(-80%);
 }
@@ -458,10 +458,10 @@ img{max-width:100%;display:block}
     transform: translateX(-80%);
   }
   18% {
-    opacity: 0.45;
+    opacity: 0.72;
   }
   72% {
-    opacity: 0.45;
+    opacity: 0.72;
   }
   100% {
     opacity: 0;
