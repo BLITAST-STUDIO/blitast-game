@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "STAR KNUCKLE",
+      url: "https://blitastxyz.itch.io/star-knuckle",
+      blurb: "ループする夜の街を歩き、ジャンプとパンチとキックを試すベルトスクロール。",
+      cover: "games/star-knuckle.jpg",
+      coverAlt: "STAR KNUCKLE — 夜の街を歩くベルトスクロール",
+      genre: "Action",
+      featured: true,
+    },
+    {
       title: "PURA",
       url: "https://blitastxyz.itch.io/pura",
       blurb: "散らばる雫を集め、ひとつの核にする。同色は融け合い、混色は純度を削る。",
       cover: "games/pura.jpg",
       coverAlt: "PURA — 暗い水面に浮かぶ色の雫",
       genre: "Puzzle",
-      featured: true,
     },
     {
       title: "Buttered Cat Flappy Paradox",
