@@ -80,6 +80,21 @@
     </section>
     <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee-track"></div></div>
 
+    <div class="share-dock">
+      <button type="button" class="share-btn" id="share-btn" aria-label="このページのURLをコピー">
+        <span class="share-icon" aria-hidden="true">
+          <svg class="share-ico-copy" viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <svg class="share-ico-done" viewBox="0 0 24 24" width="16" height="16" fill="none" hidden>
+            <path d="M5 12.5l5 5 9-11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <span class="share-label" id="share-label">シェア</span>
+      </button>
+    </div>
+
     <div class="bgm-dock" id="bgm-dock">
       <audio id="bgm-audio" src="audio/bgm.mp3" loop preload="metadata" playsinline></audio>
       <button type="button" class="bgm-toggle" id="bgm-toggle" aria-pressed="false" aria-label="BGMを再生">
@@ -192,6 +207,60 @@
             }
           } catch (e) {}
         }
+      })();
+    </script>
+    <script>
+      (function () {
+        var btn = document.getElementById("share-btn");
+        var label = document.getElementById("share-label");
+        if (!btn || !label) return;
+        var copyIco = btn.querySelector(".share-ico-copy");
+        var doneIco = btn.querySelector(".share-ico-done");
+        var timer = 0;
+
+        function siteUrl() {
+          return window.location.href.replace(/#.*$/, "");
+        }
+
+        function copyUrl() {
+          var url = siteUrl();
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(url);
+          }
+          return new Promise(function (resolve, reject) {
+            var ta = document.createElement("textarea");
+            ta.value = url;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              var ok = document.execCommand("copy");
+              ta.remove();
+              ok ? resolve() : reject();
+            } catch (e) {
+              ta.remove();
+              reject(e);
+            }
+          });
+        }
+
+        function setCopied(on) {
+          btn.classList.toggle("is-copied", on);
+          btn.setAttribute("aria-label", on ? "URLをコピーしました" : "このページのURLをコピー");
+          label.textContent = on ? "コピーした" : "シェア";
+          if (copyIco) copyIco.hidden = on;
+          if (doneIco) doneIco.hidden = !on;
+        }
+
+        btn.addEventListener("click", function () {
+          copyUrl().then(function () {
+            setCopied(true);
+            window.clearTimeout(timer);
+            timer = window.setTimeout(function () { setCopied(false); }, 1800);
+          }).catch(function () {});
+        });
       })();
     </script>
 
