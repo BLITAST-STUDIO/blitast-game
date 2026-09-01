@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "そらあるき",
+      url: "https://blitastxyz.itch.io/soraaruki",
+      blurb: "ゆびでそらをずらすと、あさ・ひる・ゆうがた・よるがめぐるよ。",
+      cover: "games/soraaruki.jpg",
+      coverAlt: "そらあるき — 空をずらして朝昼夜をめぐる",
+      genre: "For kids",
+      featured: true,
+    },
+    {
       title: "STAR KNUCKLE",
       url: "https://blitastxyz.itch.io/star-knuckle",
       blurb: "ループする夜の街を歩き、ジャンプとパンチとキックを試すベルトスクロール。",
       cover: "games/star-knuckle.jpg",
       coverAlt: "STAR KNUCKLE — 夜の街を歩くベルトスクロール",
       genre: "Action",
-      featured: true,
     },
     {
       title: "PURA",
