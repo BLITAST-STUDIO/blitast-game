@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "ギリギリブリッジ",
+      url: "https://blitastxyz.itch.io/girigiri-bridge",
+      blurb: "七夕の夜空に浮かぶ島を、竹の橋で渡っていくワンボタンゲーム。",
+      cover: "games/girigiri-bridge.jpg",
+      coverAlt: "ギリギリブリッジ — 七夕の夜空に竹の橋を渡す",
+      genre: "Casual",
+      featured: true,
+    },
+    {
       title: "そらあるき",
       url: "https://blitastxyz.itch.io/soraaruki",
       blurb: "ゆびでそらをずらすと、あさ・ひる・ゆうがた・よるがめぐるよ。",
       cover: "games/soraaruki.jpg",
       coverAlt: "そらあるき — 空をずらして朝昼夜をめぐる",
       genre: "For kids",
-      featured: true,
     },
     {
       title: "STAR KNUCKLE",
