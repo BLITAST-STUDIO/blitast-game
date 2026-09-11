@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "にじそらキャッスル",
+      url: "https://blitastxyz.itch.io/niji-sora-castle",
+      blurb: "ユニコーンがはばたいて空を進む、4〜5歳向けのやさしいフラップゲーム。",
+      cover: "games/niji-sora-castle.jpg",
+      coverAlt: "にじそらキャッスル — ユニコーンが空のおしろを目指す",
+      genre: "For kids",
+      featured: true,
+    },
+    {
       title: "ギリギリブリッジ",
       url: "https://blitastxyz.itch.io/girigiri-bridge",
       blurb: "七夕の夜空に浮かぶ島を、竹の橋で渡っていくワンボタンゲーム。",
       cover: "games/girigiri-bridge.jpg",
       coverAlt: "ギリギリブリッジ — 七夕の夜空に竹の橋を渡す",
       genre: "Casual",
-      featured: true,
     },
     {
       title: "そらあるき",
