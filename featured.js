@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "ながれぼし",
+      url: "https://blitastxyz.itch.io/nagareboshi",
+      blurb: "よぞらにながれるほしを、ゆびでタッチしてとろう。5つで花火。",
+      cover: "games/nagareboshi.jpg",
+      coverAlt: "ながれぼし — 夜空の流れ星をタッチしてとる",
+      genre: "For kids",
+      featured: true,
+    },
+    {
       title: "にじそらキャッスル",
       url: "https://blitastxyz.itch.io/niji-sora-castle",
       blurb: "ユニコーンがはばたいて空を進む、4〜5歳向けのやさしいフラップゲーム。",
       cover: "games/niji-sora-castle.jpg",
       coverAlt: "にじそらキャッスル — ユニコーンが空のおしろを目指す",
       genre: "For kids",
-      featured: true,
     },
     {
       title: "ギリギリブリッジ",
