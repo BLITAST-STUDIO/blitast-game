@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "みつばちぷぅ",
+      url: "https://blitastxyz.itch.io/mitsubachi-puu",
+      blurb: "ふれているあいだだけ、ぷぅがふわふわとすすむ。みぎはしでつぎのページへ。",
+      cover: "games/mitsubachi-puu.jpg",
+      coverAlt: "みつばちぷぅ — みつばちといっしょにページをめくる",
+      genre: "For kids",
+      featured: true,
+    },
+    {
       title: "ながれぼし",
       url: "https://blitastxyz.itch.io/nagareboshi",
       blurb: "よぞらにながれるほしを、ゆびでタッチしてとろう。5つで花火。",
       cover: "games/nagareboshi.jpg",
       coverAlt: "ながれぼし — 夜空の流れ星をタッチしてとる",
       genre: "For kids",
-      featured: true,
     },
     {
       title: "にじそらキャッスル",
