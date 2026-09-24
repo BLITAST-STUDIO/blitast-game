@@ -18,13 +18,21 @@ window.BLITAST = {
   },
   games: [
     {
+      title: "CatWalk",
+      url: "https://blitastxyz.itch.io/catwalk",
+      blurb: "月が昇る運河の街。黒猫は灯りをたどり、ボタンひとつで跳びながら夜を歩く。",
+      cover: "games/catwalk.jpg",
+      coverAlt: "CatWalk — 月夜の運河を歩く黒猫",
+      genre: "Platformer",
+      featured: true,
+    },
+    {
       title: "みつばちぷぅ",
       url: "https://blitastxyz.itch.io/mitsubachi-puu",
       blurb: "ふれているあいだだけ、ぷぅがふわふわとすすむ。みぎはしでつぎのページへ。",
       cover: "games/mitsubachi-puu.jpg",
       coverAlt: "みつばちぷぅ — みつばちといっしょにページをめくる",
       genre: "For kids",
-      featured: true,
     },
     {
       title: "ながれぼし",
