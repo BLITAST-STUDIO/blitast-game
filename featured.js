@@ -4,6 +4,7 @@
  * 手順:
  * 1. games/ にカバーを置く（推奨 1600×1200 JPEG）
  * 2. games に1件足す。Featured は featured: true を1つだけ
+ *    本格開発の特別枠は spotlight: true（Featured とは別にオーラ付きで出す）
  *
  * Strike a Pose - Friend Test は Restricted のため公開ライブラリには入れない。
  */
@@ -33,6 +34,7 @@ window.BLITAST = {
       cover: "games/catwalk.jpg",
       coverAlt: "CatWalk — 月夜の運河を歩く黒猫",
       genre: "Platformer",
+      spotlight: true,
     },
     {
       title: "みつばちぷぅ",

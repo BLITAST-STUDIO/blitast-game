@@ -115,7 +115,8 @@
         var s = data.studio;
         var games = data.games || [];
         var featured = games.filter(function (g) { return g.featured; })[0] || games[0] || {};
-        var rest = games.filter(function (g) { return g !== featured; });
+        var rest = games.filter(function (g) { return g !== featured && !g.spotlight; });
+        var spotlight = games.filter(function (g) { return g.spotlight && g !== featured; })[0];
         var setText = function (id, t) { var el = document.getElementById(id); if (el && t) el.textContent = t; };
         var setHref = function (id, h) { var el = document.getElementById(id); if (el && h) el.setAttribute("href", h); };
         var esc = function (t) { return String(t || "").replace(/[&<>"]/g, function (c) { return ({'&':'&','<':'<','>':'>','"':'"'}[c]); }); };
@@ -132,6 +133,19 @@
         var tategaki = document.querySelector(".tategaki");
         if (tategaki && s.tagline) tategaki.textContent = s.tagline;
         var grid = document.getElementById("lib-grid");
+        if (spotlight && grid) {
+          var slot = document.createElement("a");
+          slot.className = "lib-spotlight";
+          slot.href = spotlight.url;
+          slot.target = "_blank";
+          slot.rel = "noopener noreferrer";
+          slot.innerHTML = '<div class="frame">'
+            + '<span class="flagship-mark">本格開発</span>'
+            + '<img src="'+esc(spotlight.cover)+'" alt="'+esc(spotlight.coverAlt || spotlight.title)+'" width="1600" height="1200" />'
+            + '<span class="lib-play" aria-hidden="true">PLAY</span></div>'
+            + '<div class="meta"><p class="lib-genre">'+esc(spotlight.genre)+'</p><h2>'+esc(spotlight.title)+'</h2><p class="blurb">'+esc(spotlight.blurb)+'</p></div>';
+          grid.parentNode.insertBefore(slot, grid);
+        }
         if (grid) {
           grid.innerHTML = rest.map(function (g) {
             return '<li><a class="lib-card" href="'+esc(g.url)+'" target="_blank" rel="noopener noreferrer">'
