@@ -5,6 +5,9 @@
  * 1. games/ にカバーを置く（推奨 1600×1200 JPEG）
  * 2. games に1件足す。Featured は featured: true を1つだけ
  *    本格開発の特別枠は spotlight: true（Featured とは別にオーラ付きで出す）
+ * 3. 更新があった作品だけ updates を足す。無い作品にはタグを出さない。
+ *    updates: [{ date: "2026.09.27", text: "変わったこと" }]
+ *    新しいものを配列の先頭に書く。
  *
  * Strike a Pose - Friend Test は Restricted のため公開ライブラリには入れない。
  */

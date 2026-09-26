@@ -61,6 +61,7 @@
         </div>
         <p class="lib-count" id="lib-count">04</p>
       </header>
+      <div class="lib-featured-wrap" id="featured-wrap">
       <a class="lib-featured" id="featured-link" href="https://blitastxyz.itch.io/buttered-cat-flappy-paradox" target="_blank" rel="noopener noreferrer">
         <div class="frame">
           <img id="featured-cover" src="games/buttered-cat.jpg" alt="Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫" width="1600" height="1200" />
@@ -73,6 +74,7 @@
           <span class="seal"><span class="seal-dot" aria-hidden="true"></span>itch.io で遊ぶ</span>
         </div>
       </a>
+      </div>
       <ul class="lib-grid" id="lib-grid"></ul>
       <p class="all-games">
         <a id="all-games" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io のスタジオページ <span aria-hidden="true">↗</span></a>
@@ -120,6 +122,14 @@
         var setText = function (id, t) { var el = document.getElementById(id); if (el && t) el.textContent = t; };
         var setHref = function (id, h) { var el = document.getElementById(id); if (el && h) el.setAttribute("href", h); };
         var esc = function (t) { return String(t || "").replace(/[&<>"]/g, function (c) { return ({'&':'&','<':'<','>':'>','"':'"'}[c]); }); };
+        var notesHtml = function (g, id) {
+          var list = g.updates;
+          if (!list || !list.length) return "";
+          var items = list.map(function (u) {
+            return "<li><time>" + esc(u.date) + "</time><span>" + esc(u.text) + "</span></li>";
+          }).join("");
+          return '<div class="lib-log"><button type="button" class="lib-update" aria-expanded="false" aria-controls="' + id + '"><span>更新</span></button><div class="lib-notes" id="' + id + '" hidden><ol>' + items + "</ol></div></div>";
+        };
         setText("sr-tagline", s.tagline);
         setText("link-x", s.xHandle); setHref("link-x", s.x);
         setHref("link-itch", s.itch); setHref("link-github", s.github); setHref("all-games", s.itch);
@@ -130,10 +140,14 @@
         setHref("featured-link", featured.url);
         var img = document.getElementById("featured-cover");
         if (img) { img.src = featured.cover; img.alt = featured.coverAlt || featured.title || ""; }
+        var featuredWrap = document.getElementById("featured-wrap");
+        if (featuredWrap) featuredWrap.insertAdjacentHTML("beforeend", notesHtml(featured, "notes-featured"));
         var tategaki = document.querySelector(".tategaki");
         if (tategaki && s.tagline) tategaki.textContent = s.tagline;
         var grid = document.getElementById("lib-grid");
         if (spotlight && grid) {
+          var slotWrap = document.createElement("div");
+          slotWrap.className = "lib-spot-slot";
           var slot = document.createElement("a");
           slot.className = "lib-spotlight";
           slot.href = spotlight.url;
@@ -144,16 +158,29 @@
             + '<img src="'+esc(spotlight.cover)+'" alt="'+esc(spotlight.coverAlt || spotlight.title)+'" width="1600" height="1200" />'
             + '<span class="lib-play" aria-hidden="true">PLAY</span></div>'
             + '<div class="meta"><p class="lib-genre">'+esc(spotlight.genre)+'</p><h2>'+esc(spotlight.title)+'</h2><p class="blurb">'+esc(spotlight.blurb)+'</p></div>';
-          grid.parentNode.insertBefore(slot, grid);
+          slotWrap.appendChild(slot);
+          slotWrap.insertAdjacentHTML("beforeend", notesHtml(spotlight, "notes-spotlight"));
+          grid.parentNode.insertBefore(slotWrap, grid);
         }
         if (grid) {
-          grid.innerHTML = rest.map(function (g) {
+          grid.innerHTML = rest.map(function (g, i) {
             return '<li><a class="lib-card" href="'+esc(g.url)+'" target="_blank" rel="noopener noreferrer">'
               + '<div class="frame"><img src="'+esc(g.cover)+'" alt="'+esc(g.coverAlt || g.title)+'" width="1600" height="1200" />'
               + '<span class="lib-play" aria-hidden="true">PLAY</span></div>'
               + '<div class="lib-meta"><p class="lib-genre">'+esc(g.genre)+'</p><h3>'+esc(g.title)+'</h3><p>'+esc(g.blurb)+'</p></div>'
-              + '</a></li>';
+              + '</a>' + notesHtml(g, "notes-" + i) + '</li>';
           }).join("");
+        }
+        var exhibit = document.querySelector(".exhibit");
+        if (exhibit) {
+          exhibit.addEventListener("click", function (e) {
+            var btn = e.target.closest(".lib-update");
+            if (!btn) return;
+            var notes = document.getElementById(btn.getAttribute("aria-controls"));
+            var open = btn.getAttribute("aria-expanded") === "true";
+            btn.setAttribute("aria-expanded", open ? "false" : "true");
+            if (notes) notes.hidden = open;
+          });
         }
         var track = document.getElementById("marquee-track");
         if (track) {
