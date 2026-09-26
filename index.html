@@ -126,7 +126,10 @@
           var list = g.updates;
           if (!list || !list.length) return "";
           var items = list.map(function (u) {
-            return "<li><time>" + esc(u.date) + "</time><span>" + esc(u.text) + "</span></li>";
+            var lines = String(u.text || "").split("\n").filter(Boolean).map(function (line) {
+              return "<span>" + esc(line) + "</span>";
+            }).join("");
+            return "<li><time>" + esc(u.date) + "</time>" + lines + "</li>";
           }).join("");
           return '<div class="lib-log"><button type="button" class="lib-update" aria-expanded="false" aria-controls="' + id + '"><span>更新</span></button><div class="lib-notes" id="' + id + '" hidden><ol>' + items + "</ol></div></div>";
         };
