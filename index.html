@@ -2,113 +2,307 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#080b10" />
-    <meta name="description" content="BLITAST GAME — 個人開発のさまざまなゲーム。小さな世界を、ひとつずつ。" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#07090d" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="BLITAST GAME — 個人開発のゲームライブラリ。すべて無料、ブラウザですぐ遊べます。小さな世界を、ひとつずつ。" />
     <title>BLITAST GAME — 小さな世界を、ひとつずつ。</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="canonical" href="https://blitast-studio.github.io/blitast-game/" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BLITAST GAME" />
+    <meta property="og:locale" content="ja_JP" />
     <meta property="og:title" content="BLITAST GAME" />
-    <meta property="og:description" content="個人開発のさまざまなゲーム。小さな世界を、ひとつずつ。" />
+    <meta property="og:description" content="個人開発のゲームライブラリ。すべて無料、ブラウザですぐ遊べます。小さな世界を、ひとつずつ。" />
     <meta property="og:url" content="https://blitast-studio.github.io/blitast-game/" />
     <meta property="og:image" content="https://blitast-studio.github.io/blitast-game/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@blitast_studio" />
     <meta name="twitter:title" content="BLITAST GAME" />
-    <meta name="twitter:description" content="個人開発のさまざまなゲーム。小さな世界を、ひとつずつ。" />
+    <meta name="twitter:description" content="個人開発のゲームライブラリ。すべて無料、ブラウザですぐ遊べます。小さな世界を、ひとつずつ。" />
     <meta name="twitter:image" content="https://blitast-studio.github.io/blitast-game/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Web fonts load without blocking the first paint (text shows in the
+         system font first); only the weights the design uses are requested. -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Shippori+Mincho+B1:wght@500;800&amp;family=Zen+Kaku+Gothic+New:wght@400;700&amp;display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Shippori+Mincho+B1:wght@500;800&amp;family=Zen+Kaku+Gothic+New:wght@400;700&amp;display=swap" media="print" id="font-css" />
+    <script>(function (l) { if (!l) return; var on = function () { l.media = "all"; }; if (l.sheet) on(); else l.addEventListener("load", on); })(document.getElementById("font-css"));</script>
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Shippori+Mincho+B1:wght@500;800&amp;family=Zen+Kaku+Gothic+New:wght@400;700&amp;display=swap" /></noscript>
     <link rel="stylesheet" href="styles.css" />
+    <!-- Records a typing slip in featured.js (its line number) so the page can say
+         "the data has a mistake" instead of "check your connection". -->
+    <script>window.addEventListener("error", function (e) { if (e && /featured\.js/.test(e.filename || "")) window.__featuredError = e.lineno || 1; });</script>
     <script src="featured.js" defer></script>
     <script src="site.js" defer></script>
+    <!-- defer (not async): the scene must never run before <section class="hero"> exists. -->
     <script src="hero-scene.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#news">本文へ移動</a>
+    <a class="skip-link" href="#library">ゲーム一覧へ移動</a>
+    <p class="sr-only" id="sr-status" role="status" aria-live="polite"></p>
 
-    <header class="site-header">
+    <header class="site-header" id="site-header">
       <a class="brand" href="#top" aria-label="BLITAST GAME トップへ">
         <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span>BLITAST<span class="brand-light">/</span>GAME</span>
+        <span class="brand-word" aria-hidden="true">BLITAST<span class="brand-slash">/</span>GAME</span>
       </a>
-      <nav class="main-nav" aria-label="メインナビゲーション">
-        <a href="#news">NEWS</a>
-        <a href="#library">GAMES</a>
-        <a class="nav-out" data-studio-link="itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io <span aria-hidden="true">↗</span></a>
+      <nav class="main-nav" aria-label="メインメニュー">
+        <a class="nav-link" href="#library" data-nav="library">ゲーム</a>
+        <a class="nav-link" href="#news" data-nav="news">おしらせ</a>
+        <a class="nav-link nav-guide" href="#guide" data-nav="guide"><span class="nl-long">はじめての方へ</span><span class="nl-short">遊びかた</span></a>
+        <a class="nav-out" data-studio-link="itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">
+          itch.io<span class="sr-only">（新しいタブで開きます）</span>
+          <svg class="icon-out" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg>
+        </a>
+        <div class="hdr-audio" role="group" aria-label="BGM（音楽）">
+          <button class="bgm-btn" type="button" data-bgm-toggle aria-pressed="false" aria-label="BGM（音楽）">
+            <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="bgm-label" aria-hidden="true">BGM</span><span class="bgm-state" aria-hidden="true">オフ</span>
+          </button>
+          <label class="hdr-vol">
+            <span class="sr-only">BGMの音量</span>
+            <input type="range" min="0" max="1" step="0.01" value="0.32" data-bgm-volume />
+          </label>
+        </div>
       </nav>
     </header>
 
-    <main>
+    <main id="main">
+      <!-- HERO ─────────────────────────────────────────────── -->
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-fallback" aria-hidden="true"></div>
-        <div class="hero-grid" aria-hidden="true"></div>
-        <div class="hero-inner">
-          <p class="hero-eyebrow"><span class="live-dot" aria-hidden="true"></span> INDEPENDENT GAME STUDIO</p>
-          <h1 id="hero-title">BLITAST<span>GAME<span class="hero-period">.</span></span></h1>
-          <p class="hero-tagline">小さな世界を、ひとつずつ。</p>
+        <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-leak" aria-hidden="true"></div>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-frame" aria-hidden="true">
+          <span class="frame-mark frame-tl"></span><span class="frame-mark frame-tr"></span>
+          <span class="frame-mark frame-bl"></span><span class="frame-mark frame-br"></span>
         </div>
-        <div class="hero-bottom">
-          <a class="scroll-cue" href="#news"><span>SCROLL TO EXPLORE</span><span class="scroll-arrow" aria-hidden="true">↓</span></a>
-          <span class="hero-coordinate" aria-hidden="true">BLITAST / 001 — ∞</span>
+
+        <div class="hero-copy" id="hero-copy" data-hero-avoid="copy">
+          <p class="hero-kicker"><span class="kicker-dot" aria-hidden="true"></span>個人開発のゲームスタジオ<span class="kicker-en" aria-hidden="true">Independent Game Studio</span></p>
+          <h1 class="hero-title" id="hero-title"><span class="ht-line">BLITAST</span> <span class="ht-line ht-italic">Game<span class="ht-dot" aria-hidden="true">.</span></span></h1>
+          <p class="hero-tagline">小さな世界を<span class="yk-c">、</span>ひとつずつ<span class="yk-c">。</span></p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#library">
+              <svg class="icon-down" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4" /></svg>
+              ゲームをえらぶ
+            </a>
+            <a class="btn btn-ghost btn-lg" href="#news">おしらせを見る</a>
+          </div>
+          <ul class="hero-facts" aria-label="このサイトのゲームについて">
+            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" /></svg><span>全<span id="hero-count">13</span>作品 無料</span></li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" /></svg><span>インストール不要</span></li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" /></svg><span id="hero-mobile">スマホ対応 12作品</span></li>
+          </ul>
+          <div class="latest-slot" id="latest-slot"></div>
+        </div>
+
+        <div class="hero-credits" aria-hidden="true" data-hero-avoid>
+          <span><span data-count>13</span> Titles</span><i></i><span>All free</span><i></i><span>Play in browser</span>
+        </div>
+        <a class="scroll-cue" href="#library" aria-label="ゲーム一覧へスクロール" data-hero-avoid><span class="scroll-line" aria-hidden="true"></span><span aria-hidden="true">Scroll</span></a>
+      </section>
+
+      <div class="marquee" aria-hidden="true" data-anim><div class="marquee-track" id="marquee-track"></div></div>
+
+      <!-- 01 LIBRARY ───────────────────────────────────────── -->
+      <section class="section library" id="library" aria-labelledby="library-title">
+        <header class="section-head shell">
+          <p class="section-index" aria-hidden="true"><span class="idx">01</span><span class="idx-rule"></span><span class="idx-en">The Library</span></p>
+          <h2 class="section-title" id="library-title">ゲーム一覧</h2>
+          <p class="section-lead"><span data-count-holder>全<b id="library-count">13</b>作品。</span>すべて<strong>無料</strong>で、ブラウザですぐに遊べます。<span id="library-mobile">うち12作品はスマホでも遊べます。</span></p>
+        </header>
+
+        <div class="shell">
+          <aside class="guide-strip" id="guide-strip" aria-labelledby="gs-title" data-anim>
+            <div class="gs-head">
+              <h3 class="gs-title" id="gs-title">はじめての方へ</h3>
+              <p class="gs-lead">むずかしい準備はいりません。<br class="br-wide" />3つのステップで遊べます。</p>
+              <a class="text-link gs-more" href="#guide">くわしい遊びかた</a>
+            </div>
+            <ol class="gs-steps">
+              <li class="gs-step">
+                <span class="gs-mock gs-mock-1" aria-hidden="true">
+                  <span class="mock-btn"><svg viewBox="0 0 20 20"><path d="M6 3.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 6 3.8Z" /></svg>あそぶ</span>
+                  <svg class="mock-hand" viewBox="0 0 40 48"><path d="M15 4.5c0-1.9 1.4-3.3 3.2-3.3 1.8 0 3.2 1.4 3.2 3.3V20l2.1-.9c1.7-.4 3.2.6 3.5 2.1l.2.8 1.8-.6c1.7-.3 3.2.7 3.5 2.2l.2 1 1.4-.3c1.7-.2 3.1.9 3.3 2.5.6 5.6.1 10-1.6 13.3-1.8 3.4-4.8 5.4-9 5.4h-5.2c-3 0-5.6-1.5-7.2-4L4.9 30.6c-.9-1.5-.4-3.4 1.1-4.3 1.3-.8 3-.5 4 .6l5 5.3Z" /></svg>
+                </span>
+                <span class="gs-text"><span class="gs-num" aria-hidden="true">1</span><span>ゲームの<strong>「▶ あそぶ」</strong>を押す</span></span>
+              </li>
+              <li class="gs-step">
+                <span class="gs-mock gs-mock-2" aria-hidden="true">
+                  <span class="mock-url"><span class="mock-dot"></span>itch.io</span>
+                  <span class="mock-tab"><i></i><i></i><i></i></span>
+                </span>
+                <span class="gs-text"><span class="gs-num" aria-hidden="true">2</span><span><strong>itch.io</strong><span class="nowrap"><span class="yk-o">（</span>ゲームのサイト<span class="yk-c">）</span>が</span><span class="nowrap">新しいタブで開く</span></span></span>
+              </li>
+              <li class="gs-step">
+                <span class="gs-mock gs-mock-3" aria-hidden="true">
+                  <span class="mock-frame"><span class="mock-stars"></span><span class="mock-run"><svg viewBox="0 0 20 20"><path d="M6 3.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 6 3.8Z" /></svg>Run game</span></span>
+                </span>
+                <span class="gs-text"><span class="gs-num" aria-hidden="true">3</span><span>ゲーム画面か<strong class="nowrap">「Run game」</strong>を<span class="nowrap">押すとスタート</span></span></span>
+              </li>
+            </ol>
+            <div class="kids-strip">
+              <p class="kids-note"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.2s-6.5-3.9-6.5-8.6A3.6 3.6 0 0 1 10 6.4a3.6 3.6 0 0 1 6.5 2.2c0 4.7-6.5 8.6-6.5 8.6Z" /></svg><span class="kids-text">小さなお子さま<span class="nowrap">（2〜5歳）</span>向けの<span class="nowrap">ゲームもあります</span></span></p>
+              <a class="btn btn-soft" href="#all-games" data-set-filter="kids">こども向けを見る<svg class="icon-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg></a>
+            </div>
+          </aside>
+        </div>
+
+        <div class="showcase" id="showcase"></div>
+
+        <div class="shell">
+          <div class="grid-head" id="all-games" tabindex="-1">
+            <h3 class="grid-title"><span>すべてのゲーム</span><span class="grid-title-en" aria-hidden="true">All Titles</span></h3>
+            <div class="filters" id="filters" role="group" aria-label="ジャンルでしぼりこむ"></div>
+          </div>
+          <p class="filter-status" id="filter-status" tabindex="-1"></p>
+          <ul class="game-grid" id="game-grid"></ul>
+          <noscript><p class="noscript">ゲーム一覧の表示には JavaScript が必要です。<a href="https://blitastxyz.itch.io/">itch.io の作品ページ</a>からご覧ください。</p></noscript>
         </div>
       </section>
 
-      <section class="news-section section-shell" id="news" aria-labelledby="news-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-index"><span>01</span> / LATEST SIGNAL</p>
-            <h2 id="news-title">新着おしらせ<span class="heading-mark">.</span></h2>
+      <!-- 02 NEWS ──────────────────────────────────────────── -->
+      <section class="section news" id="news" aria-labelledby="news-title">
+        <div class="news-leak" aria-hidden="true"></div>
+        <header class="section-head shell">
+          <p class="section-index" aria-hidden="true"><span class="idx">02</span><span class="idx-rule"></span><span class="idx-en">What’s New</span></p>
+          <h2 class="section-title" id="news-title">おしらせ</h2>
+          <p class="section-lead">ゲームのアップデートや新作、サイトからの<span class="nowrap">おしらせ。</span>新しいものから順にならんでいます。</p>
+        </header>
+        <div class="shell news-layout">
+          <aside class="news-side" aria-labelledby="ns-title">
+            <h3 class="sr-only" id="ns-title">おしらせの見かた</h3>
+            <dl class="ns-stats">
+              <div class="ns-stat ns-last"><dt>最終更新</dt><dd id="news-last">—</dd></div>
+              <div class="ns-stat"><dt>おしらせ</dt><dd><b id="news-total">0</b>件</dd></div>
+            </dl>
+            <p class="ns-label">ラベルの見かた</p>
+            <ul class="legend">
+              <li><span class="type type-update">アップデート</span><span class="lg-eq" aria-hidden="true">＝</span><span>ゲームが新しくなりました</span></li>
+              <li><span class="type type-release">新作公開</span><span class="lg-eq" aria-hidden="true">＝</span><span>新しいゲームが遊べます</span></li>
+              <li><span class="type type-news">おしらせ</span><span class="lg-eq" aria-hidden="true">＝</span><span>サイトやスタジオからのご案内</span></li>
+            </ul>
+            <p class="ns-note">ゲームごとの<span class="nowrap">更新の記録は、</span>それぞれのゲームの<span class="nowrap">「くわしく」</span>でも読めます。</p>
+          </aside>
+          <div class="news-main">
+            <ol class="timeline" id="timeline"></ol>
+            <div class="timeline-more" id="timeline-more-wrap" hidden>
+              <button class="btn btn-ghost btn-lg" id="timeline-more" type="button" aria-controls="timeline">もっと見る</button>
+            </div>
           </div>
-          <p class="section-intro">制作中のゲームから届いた、<br />新しいアップデート。</p>
         </div>
-        <div class="news-list" id="news-list" aria-live="polite"></div>
       </section>
 
-      <section class="library-section section-shell" id="library" aria-labelledby="library-title">
-        <div class="section-heading library-heading">
-          <div>
-            <p class="section-index"><span>02</span> / GAME LIBRARY</p>
-            <h2 id="library-title">遊べるゲーム<span class="heading-mark">.</span></h2>
+      <!-- 03 GUIDE ─────────────────────────────────────────── -->
+      <section class="section guide" id="guide" aria-labelledby="guide-title">
+        <header class="section-head shell">
+          <p class="section-index" aria-hidden="true"><span class="idx">03</span><span class="idx-rule"></span><span class="idx-en">How to Play</span></p>
+          <h2 class="section-title" id="guide-title" tabindex="-1">はじめての方へ</h2>
+          <p class="section-lead">むずかしい準備はいりません。<span class="nowrap">3つのステップで、</span>すぐに遊べます。</p>
+        </header>
+        <ol class="steps shell" data-anim>
+          <li class="step" data-reveal>
+            <div class="step-visual step-visual-1" aria-hidden="true">
+              <svg class="dev-laptop" viewBox="0 0 120 80"><rect x="18" y="8" width="84" height="54" rx="6" /><path d="M6 68h108l-6 6H12Z" /><rect class="scr" x="24" y="14" width="72" height="42" rx="3" /><path class="play" d="M54 27v14l12-7Z" /></svg>
+              <svg class="dev-phone" viewBox="0 0 44 80"><rect x="3" y="3" width="38" height="74" rx="9" /><rect class="scr" x="8" y="12" width="28" height="54" rx="3" /><path class="play" d="M18 32v14l11-7Z" /></svg>
+              <span class="free-stamp">無料</span>
+            </div>
+            <div class="step-body">
+              <span class="step-num" aria-hidden="true">1</span>
+              <h3 class="step-title">すべて無料<span class="yk-c">。</span><br />ブラウザですぐ遊べます</h3>
+              <p class="step-text"><span id="guide-mobile">スマホでもパソコンでも遊べます（一部パソコン向けの作品があります）。</span><span class="nowrap">インストール</span>や会員登録は<strong>いりません</strong>。</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <div class="step-visual step-visual-2" aria-hidden="true">
+              <span class="mock-url"><span class="mock-dot"></span>itch.io</span>
+              <span class="mock-btn"><svg viewBox="0 0 20 20"><path d="M6 3.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 6 3.8Z" /></svg>あそぶ</span>
+              <svg class="mock-hand" viewBox="0 0 40 48"><path d="M15 4.5c0-1.9 1.4-3.3 3.2-3.3 1.8 0 3.2 1.4 3.2 3.3V20l2.1-.9c1.7-.4 3.2.6 3.5 2.1l.2.8 1.8-.6c1.7-.3 3.2.7 3.5 2.2l.2 1 1.4-.3c1.7-.2 3.1.9 3.3 2.5.6 5.6.1 10-1.6 13.3-1.8 3.4-4.8 5.4-9 5.4h-5.2c-3 0-5.6-1.5-7.2-4L4.9 30.6c-.9-1.5-.4-3.4 1.1-4.3 1.3-.8 3-.5 4 .6l5 5.3Z" /></svg>
+            </div>
+            <div class="step-body">
+              <span class="step-num" aria-hidden="true">2</span>
+              <h3 class="step-title"><span class="yk-o">「</span>あそぶ<span class="yk-c">」</span>を押すと<br />itch.io が開きます</h3>
+              <p class="step-text">itch.io（イッチ・アイオー）は、ゲームを<span class="nowrap">公開</span>しているサイトです。新しいタブで開き、<strong>英語で表示</strong>されますが、心配いりません。</p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <div class="step-visual step-visual-3" aria-hidden="true">
+              <span class="mock-frame"><span class="mock-stars"></span><span class="mock-run"><svg viewBox="0 0 20 20"><path d="M6 3.8v12.4a.8.8 0 0 0 1.2.7l10-6.2a.8.8 0 0 0 0-1.4l-10-6.2A.8.8 0 0 0 6 3.8Z" /></svg>Run game</span></span>
+            </div>
+            <div class="step-body">
+              <span class="step-num" aria-hidden="true">3</span>
+              <h3 class="step-title">画面か<span class="nowrap"><span class="yk-o">「</span>Run game<span class="yk-c">」</span>を</span><br />押すとスタート</h3>
+              <p class="step-text">ゲームの画面、または上のような<strong class="nowrap">「Run game」</strong><span class="nowrap">ボタン</span>を押すと<span class="nowrap">始まります。</span></p>
+            </div>
+          </li>
+        </ol>
+        <div class="shell">
+          <div class="kids-strip kids-strip-wide">
+            <p class="kids-note"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.2s-6.5-3.9-6.5-8.6A3.6 3.6 0 0 1 10 6.4a3.6 3.6 0 0 1 6.5 2.2c0 4.7-6.5 8.6-6.5 8.6Z" /></svg><span class="kids-text">小さなお子さま<span class="nowrap">（2〜5歳）</span>向けの<span class="nowrap">ゲームもあります</span></span></p>
+            <div class="kids-actions">
+              <a class="btn btn-soft" href="#all-games" data-set-filter="kids">こども向けを見る<svg class="icon-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg></a>
+              <a class="btn btn-ghost" href="#all-games" data-set-filter="all">すべてのゲームを見る</a>
+            </div>
           </div>
-          <p class="library-count"><span id="game-count">00</span><small>GAMES</small></p>
         </div>
-        <div class="highlight-grid" id="highlight-grid"></div>
-        <div class="library-divider"><span>ALL TITLES</span><span>EXPLORE THE WORLDS</span></div>
-        <ul class="game-grid" id="game-grid"></ul>
-        <a class="more-games" data-studio-link="itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">
-          <span>itch.io ですべての作品を見る</span><span aria-hidden="true">↗</span>
-        </a>
-        <noscript><p class="no-script">ゲーム一覧の表示には JavaScript が必要です。<a href="https://blitastxyz.itch.io/">itch.io の作品一覧</a>からご覧ください。</p></noscript>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="footer-top">
-        <p>BLITAST<span>/</span>GAME</p>
-        <p>小さな世界を、ひとつずつ。</p>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span id="year">2026</span> BLITAST STUDIO</span>
-        <div>
-          <a data-studio-link="itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io ↗</a>
-          <a data-studio-link="x" href="https://x.com/blitast_studio" target="_blank" rel="noopener noreferrer">X ↗</a>
-          <a data-studio-link="github" href="https://github.com/BLITAST-STUDIO" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <div class="footer-leak" aria-hidden="true"></div>
+      <div class="shell footer-inner">
+        <p class="footer-motto">小さな世界を<span class="yk-c">、</span><br />ひとつずつ<span class="yk-c">。</span></p>
+        <div class="footer-cols">
+          <div class="footer-brand">
+            <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="brand-word">BLITAST<span class="brand-slash">/</span>GAME</span>
+          </div>
+          <nav class="footer-nav" aria-label="フッターメニュー">
+            <a href="#library">ゲーム一覧</a>
+            <a href="#news">おしらせ</a>
+            <a href="#guide">はじめての方へ</a>
+          </nav>
+          <ul class="footer-links" aria-label="外部リンク">
+            <li><a class="pill-link" data-studio-link="itch" href="https://blitastxyz.itch.io/" target="_blank" rel="noopener noreferrer">itch.io<span class="sr-only">（新しいタブで開きます）</span><svg class="icon-out" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg></a></li>
+            <li><a class="pill-link" data-studio-link="x" href="https://x.com/blitast_studio" target="_blank" rel="noopener noreferrer">X<span class="sr-only">（新しいタブで開きます）</span><svg class="icon-out" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg></a></li>
+            <li><a class="pill-link" data-studio-link="github" href="https://github.com/BLITAST-STUDIO" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only">（新しいタブで開きます）</span><svg class="icon-out" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg></a></li>
+          </ul>
+        </div>
+
+        <div class="dock" id="dock" role="group" aria-label="BGMとシェア">
+          <audio id="bgm-audio" src="audio/bgm.mp3" loop preload="none"></audio>
+          <button class="bgm-btn dock-btn" type="button" data-bgm-toggle aria-pressed="false" aria-label="BGM（音楽）">
+            <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="bgm-label" aria-hidden="true">BGM</span><span class="bgm-state" aria-hidden="true">オフ</span>
+          </button>
+          <label class="dock-volume">
+            <span class="dock-vol-label" aria-hidden="true">音量</span>
+            <span class="sr-only">BGMの音量</span>
+            <input id="audio-volume" type="range" min="0" max="1" step="0.01" value="0.32" data-bgm-volume />
+          </label>
+          <button class="dock-btn dock-share" id="share-button" type="button">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2M5 5l3-3 3 3M3 8v5.5h10V8" /></svg>
+            <span id="share-label">このサイトをシェア</span>
+          </button>
+        </div>
+
+        <div class="footer-base">
+          <span>© <span id="year">2026</span> BLITAST STUDIO</span>
+          <span class="footer-base-en" aria-hidden="true">Small worlds, one at a time.</span>
         </div>
       </div>
+      <p class="toast" id="toast" aria-hidden="true"></p>
     </footer>
 
-    <div class="utility-dock" role="group" aria-label="ページ操作">
-      <div class="audio-control">
-        <audio id="bgm-audio" src="audio/bgm.mp3" loop preload="none"></audio>
-        <button class="utility-button" id="audio-toggle" type="button" aria-label="BGMを再生" aria-pressed="false"><span aria-hidden="true">♫</span><span class="utility-label">SOUND</span></button>
-        <label class="volume-control"><span class="sr-only">BGMの音量</span><input id="audio-volume" type="range" min="0" max="1" step="0.01" value="0.32" aria-label="BGMの音量" /></label>
-      </div>
-      <button class="utility-button" id="share-button" type="button" aria-label="ページのURLをコピー"><span aria-hidden="true">↗</span><span class="utility-label" id="share-label">SHARE</span></button>
-    </div>
+    <dialog class="detail" id="detail" aria-labelledby="detail-title">
+      <p class="sr-only" id="detail-status" role="status" aria-live="polite"></p>
+      <div class="detail-sheet" id="detail-sheet"></div>
+      <span class="focus-wrap" tabindex="0" data-wrap></span>
+    </dialog>
   </body>
 </html>

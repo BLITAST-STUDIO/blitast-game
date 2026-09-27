@@ -2,7 +2,7 @@
   "name": "blitast-game-site",
   "private": true,
   "scripts": {
-    "build:scene": "esbuild src/hero-scene.js --bundle --minify --format=iife --target=es2020 --outfile=hero-scene.js --legal-comments=inline"
+    "build:scene": "esbuild src/hero-scene.js --bundle --minify --format=iife --target=es2020 --outfile=hero-scene.js --legal-comments=inline --define:globalThis.HERO_DEBUG=false"
   },
   "dependencies": {
     "three": "0.186.1"

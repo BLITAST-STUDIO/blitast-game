@@ -1,15 +1,63 @@
 /**
- * ゲームの差し替えはこのファイルとカバー画像だけで完了する。
+ * ゲームとおしらせの中身は、このファイルだけで書きかえられます。
+ * （書きかえたら保存して、ページを再読み込みするだけ）
  *
- * 手順:
- * 1. games/ にカバーを置く（推奨 1600×1200 JPEG）
- * 2. games に1件足す。Featured は featured: true を1つだけ
- *    本格開発の特別枠は spotlight: true（Featured とは別にオーラ付きで出す）
- * 3. 更新があった作品だけ updates を足す。無い作品にはタグを出さない。
- *    updates: [{ date: "2026.09.27", text: "変わったこと" }]
- *    新しいものを配列の先頭に書く。
+ * ■ 書きかえたあと、ページに「書きまちがいがあります」「読み込めませんでした」と出たら
+ *   このファイルのどこかで、カンマ（,）や引用符（"）がぬけているか多すぎます。
+ *   パソコンで開いているときは、ページに何行目あたりかが出ます（ブラウザの開発者ツールの
+ *   Console にも出ます）。直して保存し、もう一度再読み込みしてください。
  *
- * Strike a Pose - Friend Test は Restricted のため公開ライブラリには入れない。
+ * ■ ゲームを追加する
+ *   1. games/ フォルダにカバー画像を入れる（横長のJPEG。例 1600×1200）
+ *   2. 下の games: [ … ] に1件足す。いちばん上に書いたものが一覧の先頭になります。
+ *      {
+ *        title: "ゲームの名前",
+ *        url: "https://blitastxyz.itch.io/game-name",   ← itch.io のページ（https のみ）
+ *        blurb: "ひとことの説明。こども向けなら「2歳から」など年齢も書くと親切です。",
+ *        cover: "games/game-name.jpg",
+ *        coverAlt: "画像の説明（無くてもOK。無ければタイトルを使います）",
+ *        genre: "For kids",   ← For kids / Action / Platformer / Casual / Puzzle / Arcade / Horror のどれか
+ *                               （Platformer は「アクション」と表示されます。これ以外を書くと、
+ *                                 書いた英語のままジャンル名になります）
+ *      },
+ *   ・大きい画像（横1600px以上）もあれば coverLarge: "games/game-name@2x.jpg" も足すと、
+ *     大きな表示や高精細な画面ではそちらを使います（無くてもOK）。
+ *   ・説明文（blurb）の中に | を入れると、そこで改行してよい区切りになります（| は表示されません）。
+ *     ひらがなだけの文は、ことばの途中で改行されないように「みぎはしで|つぎの|ページへ。」のように
+ *     区切りを入れておくと読みやすくなります（、。のあとは自動で区切ります）。
+ *   ・スマホ（タッチ）では遊べないゲームには mobile: false を付ける
+ *     → 一覧に「パソコン向け」と出て、「スマホ対応 ○作品」の数からも外れます。
+ *   ・おすすめ枠に出すなら featured: true（1つだけ）
+ *   ・本格開発中の特別枠に出すなら spotlight: true（1つだけ）
+ *   ・ページのアドレスの最後に #game/game-name を付けると、そのゲームの詳細が開きます
+ *     （game-name は itch.io のアドレスの最後の部分）。
+ *
+ * ■ アップデートを書く（そのゲームの updates に足す。新しいものを先頭に）
+ *      updates: [
+ *        { date: "2026.10.01", text: "v0.1.8 夜明けモード\n変わったこと1\n変わったこと2" },
+ *      ],
+ *   ・1行目が見出し。v0.1.8 のような番号は自動でバッジになります。
+ *   ・1行目が「v0.1.8」だけのときは、2行目の最初の一文が見出しになります。
+ *   ・2行目からが「何が変わった？」の中身（1行＝1項目）。
+ *   ・日付は "2026.10.01" の形。7日以内なら「（今日）」「（きのう）」「（3日前）」も付きます。
+ *   ・文字だけでもOK: updates: ["v0.1.8 夜明けモード\n変わったこと"]（日付なしで出ます）
+ *   ・書いたアップデートは「おしらせ」と、そのゲームの「更新の記録」の両方に出ます。
+ *
+ * ■ 公開日を書く（新作のとき。そのゲームに1行足す）
+ *      released: "2026.10.01",
+ *   → 「おしらせ」に「新作公開」として出ます。
+ *
+ * ■ サイトからのおしらせを書く（下の news に足す。新しいものを先頭に）
+ *      news: [
+ *        { date: "2026.10.01", title: "見出し", text: "本文1行目\n本文2行目", url: "https://…（無くてもOK）" },
+ *      ],
+ *
+ * ■ 一覧のサムネイルで見せたい位置を変える（coverPosition）
+ *      coverPosition: "50% 20%",
+ *   ・左右 上下 の順。"50% 0%" なら画像の上のほう、"50% 100%" なら下のほうが見えます。
+ *   ・書かなければ画像のまんなかが見えます。
+ *
+ * ※ Strike a Pose - Friend Test は Restricted のため公開ライブラリには入れない。
  */
 window.BLITAST = {
   studio: {
@@ -20,12 +68,20 @@ window.BLITAST = {
     xHandle: "@blitast_studio",
     github: "https://github.com/BLITAST-STUDIO",
   },
+  news: [
+    {
+      date: "2026.09.28",
+      title: "サイトをリニューアルしました",
+      text: "ゲーム一覧とおしらせを、見やすく作りなおしました。\nゲームの「くわしく」を押すと、ゲームの説明と「itch.io であそぶ」ボタン、これまでの更新の記録が見られます。\nゲームのアップデートは、このおしらせ欄に新しい順でのります。\nはじめての方は、「はじめての方へ」をご覧ください。遊びかたを3つのステップで紹介しています。",
+    },
+  ],
   games: [
     {
       title: "Brushy Hippo",
       url: "https://blitastxyz.itch.io/brushy-hippo",
-      blurb: "かばさんといっしょに、はみがき。歯ブラシをなぞって汚れを落とし、コップでゆすぐ。",
+      blurb: "かばさんと|いっしょに、はみがき。歯ブラシを|なぞって|汚れを|落とし、コップで|ゆすぐ。",
       cover: "games/brushy-hippo.jpg",
+      coverPosition: "50% 30%",
       coverAlt: "Brushy Hippo — かばさんとはみがきする",
       genre: "For kids",
       featured: true,
@@ -33,8 +89,9 @@ window.BLITAST = {
     {
       title: "CatWalk",
       url: "https://blitastxyz.itch.io/catwalk",
-      blurb: "月が昇る運河の街。黒猫は灯りをたどり、ボタンひとつで跳びながら夜を歩く。",
+      blurb: "月が昇る|運河の街。黒猫は|灯りを|たどり、ボタン|ひとつで|跳びながら|夜を歩く。",
       cover: "games/catwalk.jpg",
+      coverPosition: "50% 20%",
       coverAlt: "CatWalk — 月夜の運河を歩く黒猫",
       genre: "Platformer",
       spotlight: true,
@@ -60,7 +117,7 @@ window.BLITAST = {
     {
       title: "みつばちぷぅ",
       url: "https://blitastxyz.itch.io/mitsubachi-puu",
-      blurb: "ふれているあいだだけ、ぷぅがふわふわとすすむ。みぎはしでつぎのページへ。",
+      blurb: "ふれている|あいだだけ、ぷぅが|ふわふわと|すすむ。みぎはしで|つぎの|ページへ。",
       cover: "games/mitsubachi-puu.jpg",
       coverAlt: "みつばちぷぅ — みつばちといっしょにページをめくる",
       genre: "For kids",
@@ -68,15 +125,16 @@ window.BLITAST = {
     {
       title: "ながれぼし",
       url: "https://blitastxyz.itch.io/nagareboshi",
-      blurb: "よぞらにながれるほしを、ゆびでタッチしてとろう。5つで花火。",
+      blurb: "よぞらに|ながれる|ほしを、ゆびで|タッチして|とろう。5つ|とると、はなび。",
       cover: "games/nagareboshi.jpg",
+      coverPosition: "50% 90%",
       coverAlt: "ながれぼし — 夜空の流れ星をタッチしてとる",
       genre: "For kids",
     },
     {
       title: "にじそらキャッスル",
       url: "https://blitastxyz.itch.io/niji-sora-castle",
-      blurb: "ユニコーンがはばたいて空を進む、4〜5歳向けのやさしいフラップゲーム。",
+      blurb: "タップすると、ユニコーンが|はばたいて|空を|進む。4〜5歳向けの|やさしい|ゲーム。",
       cover: "games/niji-sora-castle.jpg",
       coverAlt: "にじそらキャッスル — ユニコーンが空のおしろを目指す",
       genre: "For kids",
@@ -84,7 +142,7 @@ window.BLITAST = {
     {
       title: "ギリギリブリッジ",
       url: "https://blitastxyz.itch.io/girigiri-bridge",
-      blurb: "七夕の夜空に浮かぶ島を、竹の橋で渡っていくワンボタンゲーム。",
+      blurb: "七夕の|夜空に|浮かぶ|島を、竹の橋で|渡っていく|ワンボタンゲーム。",
       cover: "games/girigiri-bridge.jpg",
       coverAlt: "ギリギリブリッジ — 七夕の夜空に竹の橋を渡す",
       genre: "Casual",
@@ -92,7 +150,7 @@ window.BLITAST = {
     {
       title: "そらあるき",
       url: "https://blitastxyz.itch.io/soraaruki",
-      blurb: "ゆびでそらをずらすと、あさ・ひる・ゆうがた・よるがめぐるよ。",
+      blurb: "ゆびで|そらを|ずらすと、あさ・|ひる・|ゆうがた・|よるが|めぐるよ。",
       cover: "games/soraaruki.jpg",
       coverAlt: "そらあるき — 空をずらして朝昼夜をめぐる",
       genre: "For kids",
@@ -100,7 +158,7 @@ window.BLITAST = {
     {
       title: "STAR KNUCKLE",
       url: "https://blitastxyz.itch.io/star-knuckle",
-      blurb: "ループする夜の街を歩き、ジャンプとパンチとキックを試すベルトスクロール。",
+      blurb: "ループする|夜の街を|歩き、ジャンプと|パンチと|キックを|試す|ベルトスクロール。",
       cover: "games/star-knuckle.jpg",
       coverAlt: "STAR KNUCKLE — 夜の街を歩くベルトスクロール",
       genre: "Action",
@@ -108,7 +166,7 @@ window.BLITAST = {
     {
       title: "PURA",
       url: "https://blitastxyz.itch.io/pura",
-      blurb: "散らばる雫を集め、ひとつの核にする。同色は融け合い、混色は純度を削る。",
+      blurb: "散らばる|雫を|集め、ひとつの|核にする。同色は|融け合い、混色は|純度を|削る。",
       cover: "games/pura.jpg",
       coverAlt: "PURA — 暗い水面に浮かぶ色の雫",
       genre: "Puzzle",
@@ -116,15 +174,16 @@ window.BLITAST = {
     {
       title: "Buttered Cat Flappy Paradox",
       url: "https://blitastxyz.itch.io/buttered-cat-flappy-paradox",
-      blurb: "背中にバタートーストを乗せた猫。クリックかスペースで飛び、どこまで生き残れるか。",
+      blurb: "背中に|バタートーストを|乗せた猫。クリックか|スペースで|飛び、どこまで|生き残れるか。",
       cover: "games/buttered-cat.jpg",
       coverAlt: "Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫",
       genre: "Arcade",
+      mobile: false,
     },
     {
       title: "おかえりひつじ",
       url: "https://blitastxyz.itch.io/okaeri-hitsuji",
-      blurb: "タッチしてひつじさんをおうちへ。2歳から遊べるやさしいゲーム。",
+      blurb: "タッチして|ひつじさんを|おうちへ。2歳から|遊べる|やさしい|ゲーム。",
       cover: "games/okaeri-hitsuji.jpg",
       coverAlt: "おかえりひつじ — 小屋の前に立つ白いひつじ",
       genre: "For kids",
@@ -132,7 +191,7 @@ window.BLITAST = {
     {
       title: "くらがり",
       url: "https://blitastxyz.itch.io/kuragari",
-      blurb: "廃屋のくらやみを、懐中電灯で探す。おばけかくれんぼ。",
+      blurb: "廃屋の|くらやみを、懐中電灯で|探す。おばけ|かくれんぼ。",
       cover: "games/kuragari.jpg",
       coverAlt: "くらがり — 暗い廃屋を懐中電灯で照らす",
       genre: "Horror",
@@ -140,7 +199,7 @@ window.BLITAST = {
     {
       title: "のっぺらCATCH",
       url: "https://blitastxyz.itch.io/noppera-catch",
-      blurb: "のっぺらぼうの顔面で、落ちてくる眉・目・鼻・口をキャッチする。",
+      blurb: "のっぺらぼうの|顔面で、落ちてくる|眉・目・鼻・口を|キャッチする。",
       cover: "games/noppera-catch.jpg",
       coverAlt: "のっぺらCATCH — のっぺらぼうの顔にパーツが落ちてくる",
       genre: "Action",
