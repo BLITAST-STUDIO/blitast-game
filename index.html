@@ -121,7 +121,13 @@
         var spotlight = games.filter(function (g) { return g.spotlight && g !== featured; })[0];
         var setText = function (id, t) { var el = document.getElementById(id); if (el && t) el.textContent = t; };
         var setHref = function (id, h) { var el = document.getElementById(id); if (el && h) el.setAttribute("href", h); };
-        var esc = function (t) { return String(t || "").replace(/[&<>"]/g, function (c) { return ({"&":"&","<":"<",">":">","\"":"""}[c]); }); };
+        var esc = function (t) {
+          return String(t || "")
+            .replace(/\u0026/g, "\u0026amp;")
+            .replace(/</g, "\u0026lt;")
+            .replace(/>/g, "\u0026gt;")
+            .replace(/"/g, "\u0026quot;");
+        };
         var stampHtml = function (g) {
           var list = g.updates;
           if (!list || !list.length || !list[0].date) return "";
