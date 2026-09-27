@@ -6,7 +6,9 @@
 
 ## ローカルで確認
 
-追加のビルド作業はありません。リポジトリのルートで `python -m http.server 8000` を実行し、`http://localhost:8000/` を開いてください。
+リポジトリのルートで `python -m http.server 8000` を実行し、`http://localhost:8000/` を開いてください。作品データやスタイルの編集にはビルド作業は不要です。
+
+ヒーローのThree.jsシーンを変更する場合は、`npm ci` の後に `npm run build:scene` を実行し、生成された `hero-scene.js` もコミットしてください。公開ページは生成済みファイルを直接読み込むため、閲覧時のnpmや外部CDNへの接続は不要です。
 
 ## ゲームと更新情報の編集
 
@@ -41,7 +43,8 @@ updates: [
 - `index.html` — ページ構造
 - `styles.css` — デザインとレスポンシブ表示
 - `site.js` — ゲーム一覧、更新情報、音声、共有ボタン
-- `hero-scene.js` — ヒーローのアニメーション。動きを減らす設定を尊重します
+- `src/hero-scene.js` — Three.jsシーンの編集用ソース。動きを減らす設定を尊重します
+- `hero-scene.js` — 公開用にまとめたシーンのコード
 - `featured.js` — 作品データ
 - `og.png` — SNSで共有したときのプレビュー画像
 
