@@ -121,7 +121,11 @@
         var spotlight = games.filter(function (g) { return g.spotlight && g !== featured; })[0];
         var setText = function (id, t) { var el = document.getElementById(id); if (el && t) el.textContent = t; };
         var setHref = function (id, h) { var el = document.getElementById(id); if (el && h) el.setAttribute("href", h); };
-        var esc = function (t) { return String(t || "").replace(/[&<>"]/g, function (c) { return ({'&':'&','<':'<','>':'>','"':'"'}[c]); }); };
+        var stampHtml = function (g) {
+          var list = g.updates;
+          if (!list || !list.length || !list[0].date) return "";
+          return '<span class="upd-stamp" aria-hidden="true">UPD ' + esc(list[0].date) + '</span>';
+        };
         var notesHtml = function (g, id) {
           var list = g.updates;
           if (!list || !list.length) return "";
@@ -142,7 +146,11 @@
         setText("featured-genre", featured.genre);
         setHref("featured-link", featured.url);
         var img = document.getElementById("featured-cover");
-        if (img) { img.src = featured.cover; img.alt = featured.coverAlt || featured.title || ""; }
+        if (img) {
+          img.src = featured.cover;
+          img.alt = featured.coverAlt || featured.title || "";
+          if (featured.updates && featured.updates.length) img.insertAdjacentHTML("afterend", stampHtml(featured));
+        }
         var featuredWrap = document.getElementById("featured-wrap");
         if (featuredWrap) featuredWrap.insertAdjacentHTML("beforeend", notesHtml(featured, "notes-featured"));
         var tategaki = document.querySelector(".tategaki");
@@ -158,6 +166,7 @@
           slot.rel = "noopener noreferrer";
           slot.innerHTML = '<div class="frame">'
             + '<span class="flagship-mark">本格開発</span>'
+            + stampHtml(spotlight)
             + '<img src="'+esc(spotlight.cover)+'" alt="'+esc(spotlight.coverAlt || spotlight.title)+'" width="1600" height="1200" />'
             + '<span class="lib-play" aria-hidden="true">PLAY</span></div>'
             + '<div class="meta"><p class="lib-genre">'+esc(spotlight.genre)+'</p><h2>'+esc(spotlight.title)+'</h2><p class="blurb">'+esc(spotlight.blurb)+'</p></div>';
@@ -168,7 +177,7 @@
         if (grid) {
           grid.innerHTML = rest.map(function (g, i) {
             return '<li><a class="lib-card" href="'+esc(g.url)+'" target="_blank" rel="noopener noreferrer">'
-              + '<div class="frame"><img src="'+esc(g.cover)+'" alt="'+esc(g.coverAlt || g.title)+'" width="1600" height="1200" />'
+              + '<div class="frame">' + stampHtml(g) + '<img src="'+esc(g.cover)+'" alt="'+esc(g.coverAlt || g.title)+'" width="1600" height="1200" />'
               + '<span class="lib-play" aria-hidden="true">PLAY</span></div>'
               + '<div class="lib-meta"><p class="lib-genre">'+esc(g.genre)+'</p><h3>'+esc(g.title)+'</h3><p>'+esc(g.blurb)+'</p></div>'
               + '</a>' + notesHtml(g, "notes-" + i) + '</li>';
