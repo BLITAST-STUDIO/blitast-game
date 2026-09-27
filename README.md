@@ -1,32 +1,48 @@
 # BLITAST GAME
 
-個人開発のさまざまなゲーム。
-
-ゲームの実体と一覧は [itch.io](https://blitastxyz.itch.io/) にあります。このリポジトリは薄い看板です。
+個人開発ゲームのポートフォリオサイトです。ゲーム本体は [itch.io](https://blitastxyz.itch.io/) で公開し、このリポジトリは作品紹介と更新情報を掲載します。
 
 **公開 URL:** https://blitast-studio.github.io/blitast-game/
 
-## Featured の差し替え
+## ローカルで確認
 
-編集するのは `featured.js` とカバー画像だけです。
+追加のビルド作業はありません。リポジトリのルートで `python -m http.server 8000` を実行し、`http://localhost:8000/` を開いてください。
 
-1. カバーを `games/` に置く（推奨 1600×1200 JPEG）
-2. `featured.js` の `featured` を書き換える
+## ゲームと更新情報の編集
+
+作品データは `featured.js` の `games` 配列にまとめています。新しいゲームを追加するときは、カバー画像を `games/` に置き、以下の形式で配列に追加します。
 
 ```js
-featured: {
+{
   title: "新しいゲーム名",
   url: "https://blitastxyz.itch.io/your-game",
   blurb: "一言紹介。",
   cover: "games/your-game.jpg",
-  coverAlt: "代替テキスト",
+  coverAlt: "画像の説明",
+  genre: "Action",
 }
 ```
 
-3. `main` に push する（Pages が自動で更新されます）
+`featured: true` はメインのおすすめ作品1本に、`spotlight: true` は本格開発中の特別枠1本に設定します。作品に更新があったら、同じゲームの `updates` 配列の先頭に追加してください。
 
-## リンク
+```js
+updates: [
+  {
+    date: "2026.09.27",
+    text: "v0.1.8 新しい更新\n変更点の説明。",
+  },
+]
+```
 
-- [itch.io](https://blitastxyz.itch.io/)
-- [X @blitast_studio](https://x.com/blitast_studio)
-- [GitHub](https://github.com/BLITAST-STUDIO)
+各ゲームの最新更新は、ヒーロー直後の「新着おしらせ」に日付順で自動表示されます。ライブラリ内の更新履歴にも、すべての更新が表示されます。更新のない作品には更新表示を出しません。
+
+## サイトの構成
+
+- `index.html` — ページ構造
+- `styles.css` — デザインとレスポンシブ表示
+- `site.js` — ゲーム一覧、更新情報、音声、共有ボタン
+- `hero-scene.js` — ヒーローのアニメーション。動きを減らす設定を尊重します
+- `featured.js` — 作品データ
+- `og.png` — SNSで共有したときのプレビュー画像
+
+`main` ブランチのルートを GitHub Pages が公開しています。変更を `main` に反映すると、同じ公開 URL の内容が更新されます。
