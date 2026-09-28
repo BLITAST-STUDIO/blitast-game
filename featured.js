@@ -174,11 +174,10 @@ window.BLITAST = {
     {
       title: "Buttered Cat Flappy Paradox",
       url: "https://blitastxyz.itch.io/buttered-cat-flappy-paradox",
-      blurb: "背中に|バタートーストを|乗せた猫。クリックか|スペースで|飛び、どこまで|生き残れるか。",
+      blurb: "背中に|バタートーストを|乗せた猫。タップ（パソコンは|クリックか|スペース）で|飛び、どこまで|生き残れるか。",
       cover: "games/buttered-cat.jpg",
       coverAlt: "Buttered Cat Flappy Paradox — バタートーストを背負って飛ぶオレンジの猫",
       genre: "Arcade",
-      mobile: false,
     },
     {
       title: "おかえりひつじ",
