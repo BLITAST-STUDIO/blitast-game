@@ -250,13 +250,18 @@ a { color: inherit; text-decoration: none; }
   background: var(--ink);
 }
 .hero-fallback, .hero-canvas, .hero-leak, .hero-shade, .hero-frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* The 3D scene's first frame reproduces this glow and cross-fades from it (GLSL_FALLBACK in
+   hero-scene's src/scene.js reads --fb-x / --fb-y): keep the stops and offsets in sync. */
 .hero-fallback {
   z-index: 0;
+  --fb-x: 66%; --fb-y: 44%;
   background:
-    radial-gradient(circle at 66% 42%, rgba(255, 128, 95, .26) 0, rgba(255, 128, 95, 0) 16%),
-    radial-gradient(circle at 70% 50%, rgba(154, 227, 238, .14) 0, rgba(154, 227, 238, 0) 30%),
-    radial-gradient(circle at 66% 44%, #1c2a36 0, #0d141c 30%, var(--ink) 62%);
+    radial-gradient(circle at var(--fb-x) calc(var(--fb-y) - 2%), rgba(255, 128, 95, .26) 0, rgba(255, 128, 95, 0) 16%),
+    radial-gradient(circle at calc(var(--fb-x) + 4%) calc(var(--fb-y) + 6%), rgba(154, 227, 238, .14) 0, rgba(154, 227, 238, 0) 30%),
+    radial-gradient(circle at var(--fb-x) var(--fb-y), #1c2a36 0, #0d141c 30%, var(--ink) 62%);
 }
+/* phones: the glow sits where the compound will ignite (above the copy) */
+@media (max-width: 699px) { .hero-fallback { --fb-x: 50%; --fb-y: 31%; } }
 .hero-canvas { z-index: 1; display: block; }
 /* Hero-only grain: static by default, animated on desktop while on screen. */
 .hero::after {
