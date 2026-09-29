@@ -325,6 +325,8 @@ a { color: inherit; text-decoration: none; }
 .ht-line { display: block; }
 .ht-italic { font-style: italic; padding-left: .5em; letter-spacing: -.01em; }
 .ht-dot { color: var(--coral); font-style: normal; }
+/* The site name is brush-lettered (the header logo stays in the plain face). */
+.hero-title, .hero-title .ht-italic { font-family: "Permanent Marker", var(--serif); font-style: normal; letter-spacing: 0; }
 .hero-tagline {
   margin: 26px 0 0;
   font: 500 clamp(20px, 1.75vw, 26px)/1.6 var(--mincho);
