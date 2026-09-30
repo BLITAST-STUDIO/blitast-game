@@ -77,6 +77,16 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "VS カラスのフン",
+      url: "https://blitastxyz.itch.io/vs-karasu-no-fun",
+      blurb: "電線の|カラスの動きを見て、|落ちてくる|フンを|左右に|かわす。|気軽な|おさんぽサバイバル。",
+      cover: "games/vs-karasu-no-fun.jpg",
+      coverPosition: "0% 50%",
+      coverAlt: "VS カラスのフン — 住宅街の電線にとまるカラスと、歩いていく少年",
+      genre: "Action",
+      released: "2026.09.30",
+    },
+    {
       title: "Brushy Hippo",
       url: "https://blitastxyz.itch.io/brushy-hippo",
       blurb: "かばさんと|いっしょに、はみがき。歯ブラシを|なぞって|汚れを|落とし、コップで|ゆすぐ。",
