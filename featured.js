@@ -77,6 +77,15 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "双星獣",
+      url: "https://blitastxyz.itch.io/soseiju",
+      blurb: "2つつながった|星を落として、|同じ色を|4つそろえると、|星獣が消える。|落ち物パズル。",
+      cover: "games/soseiju.jpg",
+      coverAlt: "双星獣 — 色とりどりの星と星獣が並ぶ、落ち物パズルの画面",
+      genre: "Puzzle",
+      released: "2026.09.30",
+    },
+    {
       title: "VS カラスのフン",
       url: "https://blitastxyz.itch.io/vs-karasu-no-fun",
       blurb: "電線の|カラスの動きを見て、|落ちてくる|フンを|左右に|かわす。|気軽な|おさんぽサバイバル。",
