@@ -77,6 +77,16 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "VS カラスのフン EVOLUTION",
+      url: "https://blitastxyz.itch.io/vs-karasu-no-fun-evolution",
+      blurb: "元祖から進化した、|左右によけるおさんぽサバイバル。|増え続ける|カラスの|フンの嵐を、|どこまでよけられる？",
+      cover: "games/vs-karasu-no-fun-evolution.jpg",
+      coverPosition: "0% 50%",
+      coverAlt: "VS カラスのフン EVOLUTION — 住宅街の電線にとまるカラスと、歩いていく少年",
+      genre: "Action",
+      released: "2026.10.01",
+    },
+    {
       title: "双星獣",
       url: "https://blitastxyz.itch.io/soseiju",
       blurb: "2つつながった|星を落として、|同じ色を|4つそろえると、|星獣が消える。|落ち物パズル。",
