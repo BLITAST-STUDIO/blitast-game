@@ -1112,6 +1112,15 @@ a.tl-game:hover { color: var(--coral-hi); text-decoration: underline; text-under
   transition: border-color .25s ease, background-color .25s ease, color .25s ease;
 }
 .pill-link:hover { border-color: var(--coral); color: var(--coral-hi); background: rgba(255, 128, 95, .06); }
+.pill-link .icon-x { width: 16px; height: 16px; flex: none; fill: currentColor; }
+.x-handle { font-weight: 500; color: var(--text-2); letter-spacing: .01em; }
+.footer-links .x-handle { font-weight: 700; color: var(--cream); }
+.pill-link:hover .x-handle, .footer-links .pill-link:hover .x-handle { color: inherit; }
+/* Follow card in the news sidebar */
+.ns-follow { grid-column: 1 / -1; display: grid; gap: 12px; justify-items: start; padding: 18px 20px; border: 1px solid var(--line-2); border-radius: 18px; background: rgba(243, 240, 233, .035); }
+.ns-follow-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text); text-wrap: balance; }
+.pill-x { flex-wrap: wrap; row-gap: 4px; padding-block: 10px; border-color: rgba(255, 128, 95, .55); background: rgba(255, 128, 95, .08); }
+@media (min-width: 1280px) { .ns-follow { margin-top: 22px; } }
 .footer-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 26px; font-size: 14px; color: var(--text-2); }
 .footer-base-en { font: italic 400 18px/1.4 var(--serif); color: var(--text-3); }
 
