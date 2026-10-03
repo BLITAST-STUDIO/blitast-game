@@ -1116,6 +1116,42 @@ a.tl-game:hover { color: var(--coral-hi); text-decoration: underline; text-under
 .x-handle { font-weight: 500; color: var(--text-2); letter-spacing: .01em; }
 .footer-links .x-handle { font-weight: 700; color: var(--cream); }
 .pill-link:hover .x-handle, .footer-links .pill-link:hover .x-handle { color: inherit; }
+/* Official links: a compact row under the library lead, and a large two-card band after the grid */
+.link-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; }
+.link-chip {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 18px;
+  border: 1px solid var(--line-2); border-radius: 999px; font: 700 16px/1 var(--sans); color: var(--cream);
+  transition: border-color .25s ease, background-color .25s ease, color .25s ease;
+}
+.link-chip .icon-itch, .link-chip .icon-x { width: 18px; height: 18px; flex: none; fill: currentColor; }
+.link-chip .icon-out { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.link-chip-itch { border-color: rgba(255, 128, 95, .6); background: rgba(255, 128, 95, .1); color: var(--coral-soft); }
+.link-chip:hover { border-color: var(--coral); color: var(--coral-hi); background: rgba(255, 128, 95, .14); }
+.link-band { margin-top: clamp(40px, 6vw, 72px); padding-top: clamp(28px, 4vw, 44px); border-top: 1px solid var(--line); }
+.link-band-title { margin: 0 0 18px; font: 700 17px/1.5 var(--sans); letter-spacing: .04em; color: var(--text-2); }
+.link-band-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.link-card {
+  display: flex; align-items: center; gap: 16px; padding: 20px 22px; min-height: 96px;
+  border: 1px solid var(--line-2); border-radius: 20px; background: rgba(243, 240, 233, .035); color: var(--cream);
+  transition: border-color .25s ease, background-color .25s ease, transform .25s ease;
+}
+.link-card:hover { border-color: var(--coral); background: rgba(255, 128, 95, .07); transform: translateY(-2px); }
+.link-card-itch { border-color: rgba(255, 128, 95, .55); background: rgba(255, 128, 95, .08); }
+.lc-mark { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 50%; background: rgba(243, 240, 233, .08); }
+.lc-mark svg { width: 24px; height: 24px; fill: currentColor; }
+.lc-body { display: grid; gap: 4px; min-width: 0; flex: 1; }
+.lc-body strong { font: 700 19px/1.4 var(--sans); }
+.lc-body > span { font-size: 15px; line-height: 1.6; color: var(--text-2); }
+.lc-go { flex: none; width: 20px; height: 20px; color: var(--coral); }
+.lc-go svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+@media (max-width: 700px) {
+  .link-row { margin-top: 18px; }
+  .link-chip { flex: 1 1 100%; justify-content: flex-start; min-height: 52px; }
+  .link-chip .icon-out { margin-left: auto; }
+  .link-band-cards { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .link-card { padding: 16px 18px; gap: 14px; }
+  .lc-mark { width: 46px; height: 46px; }
+}
 /* Follow card in the news sidebar */
 .ns-follow { grid-column: 1 / -1; display: grid; gap: 12px; justify-items: start; padding: 18px 20px; border: 1px solid var(--line-2); border-radius: 18px; background: rgba(243, 240, 233, .035); }
 .ns-follow-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text); text-wrap: balance; }
