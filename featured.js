@@ -82,6 +82,15 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "のどちんこ君",
+      url: "https://blitastxyz.itch.io/nodochinko-kun",
+      blurb: "あ〜んと|口が開いた|一瞬に、|にこにこの|のどちんこ君を|ちょん。|絵本みたいな、|親子で遊べる|反射神経ゲーム。",
+      cover: "games/nodochinko-kun.jpg",
+      coverAlt: "のどちんこ君 — 大きく開いた口の中で、にこにこ笑うのどちんこ",
+      genre: "For kids",
+      released: "2026.10.03",
+    },
+    {
       title: "VS カラスのフン EVOLUTION",
       url: "https://blitastxyz.itch.io/vs-karasu-no-fun-evolution",
       blurb: "1回のプロンプトで生まれた|元祖から、|アップデートで|成長していく|おさんぽサバイバル。|いま進化中。",
