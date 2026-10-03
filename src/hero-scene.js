@@ -48,6 +48,15 @@ const PULSE_PERIOD = 7.4;
 const SWEEP_LEN = 2.3;
 const HOP_SPEED = 3.1; // hops per second of the strut comet
 const HOP_MAX = 3.6; // the farthest strut point (the back pentagon's edge midpoints)
+// Visitors whose system asks for less motion get the still by default; the page's
+// "背景を動かす" button stores an opt-in the scene honours (and announces with "blitast:motion").
+function motionOptIn() {
+  try {
+    return localStorage.getItem("blitast-motion") === "on";
+  } catch (e) {
+    return false;
+  }
+}
 const T_STATIC = 23.4; // reduced-motion still (a quiet moment between beats)
 const T_SAMPLE = 3.0; // the governor starts sampling after the fade-in
 
@@ -723,7 +732,7 @@ function mount(canvas, hero) {
   // phones in landscape are wide but still phones
   const coarsePhone = window.matchMedia("(pointer: coarse)").matches && Math.min(screen.width || 1e4, screen.height || 1e4) < 700;
   const lite = narrowAtStart || lowCores || coarsePhone;
-  let reduced = mqReduce.matches;
+  let reduced = mqReduce.matches && !motionOptIn();
 
   canvas.style.visibility = "hidden"; // the hero background shows until the first frame
   const renderer = new THREE.WebGLRenderer({
@@ -2267,16 +2276,18 @@ function mount(canvas, hero) {
   io.observe(hero);
   document.addEventListener("visibilitychange", refresh);
   window.addEventListener("blitast:modal", onModal);
-  listen(mqReduce, () => {
+  const onReduceChange = () => {
     if (dead) return;
     const was = reduced;
-    reduced = mqReduce.matches;
+    reduced = mqReduce.matches && !motionOptIn();
     if (reduced === was) return;
     // the still is always the composed moment; motion resumes from it
     jumpClock(T_STATIC);
     refresh();
     if (reduced) renderStatic();
-  });
+  };
+  listen(mqReduce, onReduceChange);
+  window.addEventListener("blitast:motion", onReduceChange);
   canvas.addEventListener(
     "webglcontextlost",
     (ev) => {

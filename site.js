@@ -804,6 +804,26 @@
       revealEntry(id);
     });
   }
+  /* Visitors whose system asks for reduced motion see a still background; this button lets them
+     opt in to the moving one (remembered in this browser). */
+  const motionToggle = $("#motion-toggle");
+  if (motionToggle && reduceMotion.matches) {
+    const label = $("#motion-toggle-label");
+    const stored = () => { try { return localStorage.getItem("blitast-motion") === "on"; } catch (_) { return false; } };
+    const paint = (on) => {
+      motionToggle.setAttribute("aria-pressed", String(on));
+      if (label) label.textContent = on ? "背景を止める" : "背景を動かす";
+    };
+    paint(stored());
+    motionToggle.hidden = false;
+    motionToggle.addEventListener("click", () => {
+      const on = motionToggle.getAttribute("aria-pressed") !== "true";
+      try { localStorage.setItem("blitast-motion", on ? "on" : "off"); } catch (_) { /* this visit only */ }
+      paint(on);
+      window.dispatchEvent(new CustomEvent("blitast:motion", { detail: { on } }));
+    });
+  }
+
   /* The 3D scene fires "blitast:pulse" on every core pulse: sweep the chip in sync. */
   const heroEl = $(".hero");
   window.addEventListener("blitast:pulse", () => {

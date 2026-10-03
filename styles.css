@@ -1694,6 +1694,20 @@ a.tl-game:hover { color: var(--coral-hi); text-decoration: underline; text-under
 /* ==========================================================================
    REDUCED MOTION
    ========================================================================== */
+/* Shown only to visitors whose system asks for reduced motion: lets them opt in to the moving background. */
+.motion-toggle {
+  position: absolute; z-index: 5; right: var(--inset); bottom: 34px;
+  display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 18px 0 14px;
+  border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer;
+  background: rgba(7, 9, 13, .72); color: var(--cream); font: 700 15px/1 var(--sans);
+  transition: border-color .25s ease, background-color .25s ease, color .25s ease;
+}
+.motion-toggle:hover { border-color: var(--coral); color: var(--coral-hi); }
+.motion-toggle .mt-icon { width: 15px; height: 15px; fill: currentColor; }
+.motion-toggle .mt-pause { display: none; }
+.motion-toggle[aria-pressed="true"] .mt-play { display: none; }
+.motion-toggle[aria-pressed="true"] .mt-pause { display: block; }
+@media (max-width: 699px) { .motion-toggle { right: 16px; bottom: auto; top: calc(var(--header-h) + 12px); } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
