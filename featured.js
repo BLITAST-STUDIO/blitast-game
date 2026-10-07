@@ -87,6 +87,15 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "こいぬのおうちみち",
+      url: "https://blitastxyz.itch.io/ouchimichi",
+      blurb: "指で|一本道を|つないで、|こいぬを|おうちへ。|親子で|ゆっくり遊べる|24面のパズル。",
+      cover: "games/ouchimichi.jpg",
+      coverAlt: "こいぬのおうちみち — こいぬとおうちの間に道をつなぐパズルの画面",
+      genre: "For kids",
+      released: "2026.10.07",
+    },
+    {
       title: "ほたるの よる",
       url: "https://blitastxyz.itch.io/hotaru-no-yoru",
       blurb: "月明かりの|田んぼで、|そっと近づいて|蛍の|ひかりを集める。|90秒で|6匹あつめると、|花火が上がる。",
