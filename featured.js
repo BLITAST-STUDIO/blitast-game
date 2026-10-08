@@ -87,6 +87,15 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "踏切くん",
+      url: "https://blitastxyz.itch.io/fumikiri-kun",
+      blurb: "主人公は、|踏切そのもの。|遮断機を|くるくる回して、|坂や谷を|こえて|駅を目指す、|4歳の息子のための|ゲーム。",
+      cover: "games/fumikiri-kun.jpg",
+      coverAlt: "踏切くん — 丘の上に立つ、黄色と黒の踏切",
+      genre: "For kids",
+      released: "2026.10.09",
+    },
+    {
       title: "こいぬのおうちみち",
       url: "https://blitastxyz.itch.io/ouchimichi",
       blurb: "指で|一本道を|つないで、|こいぬを|おうちへ。|親子で|ゆっくり遊べる|24面のパズル。",
