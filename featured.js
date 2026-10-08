@@ -98,7 +98,7 @@ window.BLITAST = {
     {
       title: "こいぬのおうちみち",
       url: "https://blitastxyz.itch.io/ouchimichi",
-      blurb: "指で|一本道を|つないで、|こいぬを|おうちへ。|親子で|ゆっくり遊べる|24面のパズル。",
+      blurb: "2歳の娘でも|遊べるように|作りました。|指で|一本道を|つないで、|こいぬを|おうちへ。|親子で|ゆっくり遊べる|24面のパズル。",
       cover: "games/ouchimichi.jpg",
       coverAlt: "こいぬのおうちみち — こいぬとおうちの間に道をつなぐパズルの画面",
       genre: "For kids",
