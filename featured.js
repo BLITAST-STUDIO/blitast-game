@@ -87,6 +87,15 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "michi-pen",
+      url: "https://blitastxyz.itch.io/michi-pen",
+      blurb: "線を描いて、|ペンギンを|鍵と|おうちへ|導くパズル。|指でなぞった線が|すべり台に|なります。|全12ステージ。",
+      cover: "games/michi-pen.jpg",
+      coverAlt: "michi-pen — 描いた線の坂をすべるペンギンと、おうちの鍵",
+      genre: "Puzzle",
+      released: "2026.10.18",
+    },
+    {
       title: "踏切くん",
       url: "https://blitastxyz.itch.io/fumikiri-kun",
       blurb: "主人公は、|踏切そのもの。|遮断機を|くるくる回して、|坂や谷を|こえて|駅を目指す、|4歳の息子のための|ゲーム。",
