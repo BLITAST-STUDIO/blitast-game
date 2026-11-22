@@ -87,6 +87,17 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "STRIKE RUSH 3D — 無双パンチ＆キック",
+      url: "https://blitastxyz.itch.io/strike-rush-3d",
+      blurb: "押し寄せる|敵の大群を、|パンチとキックで|吹き飛ばす|3D格闘アクション。",
+      cover: "games/strike-rush-3d.jpg",
+      coverPosition: "50% 85%",
+      coverAlt: "STRIKE RUSH 3D — 敵の大群をパンチとキックで吹き飛ばす3D格闘の画面",
+      genre: "Action",
+      mobile: false,
+      released: "2026.11.22",
+    },
+    {
       title: "michi-pen",
       url: "https://blitastxyz.itch.io/michi-pen",
       blurb: "線を描いて、|ペンギンを|鍵と|おうちへ|導くパズル。|指でなぞった線が|すべり台に|なります。|全12ステージ。",
