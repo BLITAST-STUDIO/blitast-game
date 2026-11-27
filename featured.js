@@ -87,6 +87,16 @@ window.BLITAST = {
   ],
   games: [
     {
+      title: "Adanson's Room",
+      url: "https://blitastxyz.itch.io/adansons-room",
+      blurb: "小さなハエトリグモになって、|糸でスイングしながら|部屋に散らばった|星を10個集める|3Dアクション。|Geminiへの|1回のプロンプトで|作った実験作です。",
+      cover: "games/adansons-room.jpg",
+      coverAlt: "Adanson's Room — 部屋を探索する小さなハエトリグモ",
+      genre: "Action",
+      mobile: false,
+      released: "2026.11.25",
+    },
+    {
       title: "STRIKE RUSH 3D — 無双パンチ＆キック",
       url: "https://blitastxyz.itch.io/strike-rush-3d",
       blurb: "押し寄せる|敵の大群を、|パンチとキックで|吹き飛ばす|3D格闘アクション。",
